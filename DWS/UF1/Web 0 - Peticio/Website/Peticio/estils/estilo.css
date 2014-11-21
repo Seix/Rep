@@ -1,0 +1,105 @@
+﻿*{
+    margin: 0px;
+    padding: 0px;
+    font-family: Tahoma;
+    font-size: 10pt;
+}
+
+article, header, section {
+    display: block;
+}
+
+#tot {
+    width: 980px;
+    margin: 10px, auto, 0px, auto;
+}
+
+    #tot > header {
+        margin-bottom: 10px;
+        height: 150px;
+    }
+
+#logo {
+    float: left;
+    width: 289px;
+    height: 106px;
+    background-image: url("/Peticio/imatges/logo-cepnet.png");
+    background-repeat: no-repeat;
+}
+
+#data {
+    float: right;
+}
+
+.titolCalendari{
+   background-color: rgb(42, 28, 183);
+   color: white;
+}
+
+section {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(42, 28, 183);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    section header {
+        height: 30px;
+        background-color: rgb(42, 28, 183);
+        font-weight: bold;
+        color: white;
+        padding-top: 8px;
+        padding-left: 10px; 
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        clear: both;
+    }
+
+    section article {
+        padding: 15px;        
+    }
+
+#cursMatriculat {
+    width: 480px;
+    float: left;
+}
+
+#cursNou {
+    width: 480px;
+    float: right;
+}
+
+#resum {
+    clear: both;
+    width: auto;
+}
+
+.label {
+    display: inline-block;
+    width: 150px;
+    }
+
+.textBox, .dropDownList {
+    display: inline-block;
+    width: 250px;
+    }
+
+.validator {
+    display: inline-block;
+    color: rgb(255, 129, 0);
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.button {
+    height: 30px;
+    background-color: rgb(255, 129, 0);
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 10px;
+    clear: both;
+}

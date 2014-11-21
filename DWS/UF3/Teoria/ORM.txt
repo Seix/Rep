@@ -1,0 +1,3 @@
+ORM(Oriented Relational Mapping)
+- EntityFramework -->.NET
+- Hibernate --> Java, nHibernate --> .NET

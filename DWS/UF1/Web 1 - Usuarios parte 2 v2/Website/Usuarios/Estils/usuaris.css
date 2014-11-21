@@ -1,0 +1,129 @@
+﻿body {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Comic Sans MS';
+    font-size: 16px;
+}
+header, nav, section {
+    display: block;
+}
+
+#tot {
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    #tot > header {
+        height: 70px;
+        margin-top: 10px;
+    }
+
+header {
+    padding-left: 5px;
+    margin-bottom: 10px;
+    height: 30px;
+    background-color: black;
+    color: white;
+}
+
+#logo {
+    float: left;
+    width: 100px;
+    height: 50px;
+    margin: 10px;
+}
+
+#sortir {
+    float: right;
+    margin-right: 10px;
+}
+
+#tot > nav {
+    height: 50px;
+}
+
+.panelBotonsAgregar {
+    margin-top: 55px;
+    margin-left: 20px;
+}
+
+.panelBotons {
+    padding-top: 10px;
+    clear: both;
+}
+
+.imgLogo {
+    width: 100px;
+    height: 50px;
+}
+
+.imgSortir {
+    float: right;
+}
+
+.hyprLnk {
+    display: inline-block;
+    width: 150px;
+    margin-right: 5px;
+    padding-top: 5px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.panels {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid black;
+}
+
+.simplelbl {
+    display: inline-block;
+    width: 175px;
+}
+
+.txtbx {
+    display: inline-block;
+    width: 200px;
+}
+
+.errorlbl {
+    display: inline-block;
+    margin-left: 10px;
+    color: red;
+}
+
+.bttnColumns {
+    padding: 5px;
+}
+
+.txtColumns {
+    width: 250px;
+    text-align: center;
+}
+
+.panelsRols {
+    width: 450px;
+    padding: 10px;
+    float: left;
+}
+
+.panelsAssDesRols {
+    width: 125px;
+    float: left;
+}
+
+.lstbx {
+    height: 100%;
+    width: 100%;
+}
+
+.bttns {
+    background-color: black;
+    border-color: black;
+    color: white;
+    width: 100px;
+}

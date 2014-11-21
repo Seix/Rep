@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Principal.master.cs" Inherits="Principal" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link href="Estils/usuaris.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="tot">
+        <header>
+            <div id="logo">
+                <asp:Image ID="imgLogo" CssClass="imgLogo" runat="server" ImageUrl="~/Imatges/DAW2A_LOGO_BALNC.png" ToolTip="DAW2A" />
+            </div>
+            <div id="sortir">
+                <asp:Image ID="imgSortir" CssClass="imgSortir" runat="server" ToolTip="Sortir" ImageUrl="~/Imatges/exit_32.png" /></div>
+        </header>
+        <nav>
+            <asp:HyperLink ID="HyprLnkUsuaris" CssClass="hyprLnk" runat="server" NavigateUrl="Usuaris.aspx" ToolTip="Usuaris">Usuaris</asp:HyperLink>
+            <asp:HyperLink ID="HyperLinkRols" CssClass="hyprLnk" runat="server" NavigateUrl="Rols.aspx" ToolTip="Rols">Rols</asp:HyperLink>
+        </nav>
+        <section>
+            <asp:ContentPlaceHolder ID="CntntHldrSection" runat="server"></asp:ContentPlaceHolder>
+        </section>
+    </div>
+    </form>
+</body>
+</html>
