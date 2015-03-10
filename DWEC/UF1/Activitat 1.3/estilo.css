@@ -1,0 +1,47 @@
+fieldset{
+    width: 97%;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+
+legend{
+    font-size:  20px;
+    font-weight: bolder;
+    color: gray;
+}
+
+thead{
+    background-color: cornflowerblue;
+    font-weight: bold;
+}
+
+tbody{
+    background-color: lightgray;
+}
+
+tbody > tr{
+    height: 215px;
+}
+
+textarea{
+    min-height: 211px; /*Necesario para internet explorer*/
+    height: 100%;
+    width: 100%;
+    resize: none;
+}
+
+.conColumn{
+    width: 50px;
+}
+
+.codColumn{
+    width: 75%;
+}
+
+.resColumn{
+    width: 25%;
+}
+
+.conValue{
+    text-align: center;
+}

@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <style>
+            *{
+                max-width: 700px;
+                text-align: center;
+            }
+
+            table{
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .cuerpoTabla{
+            }
+
+            .bttnAccion{
+                font-family: calibri;
+                font-weight: bold;
+                font-size: 16px;
+                background: -webkit-radial-gradient(center, ellipse cover, rgba(200,255,90,1) 0%, rgba(73,223,80,1) 100%);
+                border-color: rgba(73,223,80,1);
+                border-radius: 12px;
+                color: black;
+                padding: 16px;
+            }
+        </style>
+        <script>
+            function loadImages(sources, callback) {
+                console.log("Entro carga de imagenes");
+                var images = [];
+                var loadedImages = 0;
+                // get num of sources
+                for (i = 0; i < sources.length; i++) {         //for(var src in sources) {
+                    images[i] = new Image();                   //images[src] = new Image();
+                    images[i].onload = function(){             //images[src].onload = function() {
+                        loadedImages++;                        //
+                        if(loadedImages == sources.length)     //if(++loadedImages >= sources.lenght) {
+                        {                                      //
+                            console.log("Llamo callback");
+                            alert("Imágenes cargadas");        //   console.log("Llamo callback");
+                            callback(images);                  //   callback(images);
+                        }                                      //   }
+                    }                                          //
+                    console.log("Cargo imagen");               //console.log("Cargo imagen");
+                    images[i].src = sources[i];                //images[src].src = sources[src];
+                }                                              //}
+                
+                console.log("Acabo carga imagenes");
+            }
+            var sources = ["./images/Captura1.png",
+                "./images/Captura2.png",
+                "./images/Captura3.png",
+                "./images/Captura4.png",
+                "./images/Captura5.png",
+                "./images/Captura6.png",
+                "./images/Captura7.png",
+                "./images/Captura8.png",
+                "./images/Captura9.png",
+                "./images/Captura10.png"];
+            function ejecutar(){
+                loadImages(sources, function(images) {
+                var cadena = "";
+                //Random + innerHTML
+                for (i = 0; i < 5; i++) {
+                    var j = Math.random() * 10;
+                    cadena += "<img src='" + images[j-1].src + "'>";
+                }
+                document.getElementById("img").innerHTML = cadena;
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="ejecutar()" class="bttnAccion">Cargar 5 imágenes aleatorias</button>
+        <div id="img"></div>
+    </body>
+</html>

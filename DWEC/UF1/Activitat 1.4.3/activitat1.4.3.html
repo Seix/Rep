@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <style>
+            *{
+                max-width: 700px;
+                text-align: center;
+            }
+
+            table{
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .cuerpoTabla{
+            }
+
+            .bttnAccion{
+                font-family: calibri;
+                font-weight: bold;
+                font-size: 16px;
+                background: -webkit-radial-gradient(center, ellipse cover, rgba(200,255,90,1) 0%, rgba(73,223,80,1) 100%);
+                border-color: rgba(73,223,80,1);
+                border-radius: 12px;
+                color: black;
+                padding: 16px;
+            }
+        </style>
+        <script>
+            //Función principal de la aplicación
+            function main (imagenes) {
+                var cadena = "";    
+                //Hacemos un random para mostrar 5 imágenes de las 10 imágenes precargadas.
+                for (i = 0; i < 5; i++) {
+                    var j = parseInt(Math.random() * 9);
+                    //Creamos etiquetas img para cada imagen (las concatenamos) 
+                    //--> <img src="src_imagen_aleatoria">
+                    cadena += "<img src='" + imagenes[j].src + "'>";
+                }
+                //Printamos en el HTML todas las etiquetas
+                console.log("Mostramos imágenes");
+                document.getElementById("img").innerHTML = cadena;
+            }
+            
+            //Carga de imágenes
+            function loadImages(imagenesParaCargar, main) {
+                console.log("Entro carga de imagenes");
+                var imagenes = [];
+                var imagenesCargadas = 0;
+                
+                for (i = 0; i < imagenesParaCargar.length; i++) {         
+                    imagenes[i] = new Image();
+                    //Programamos una función para el onload de una imagen.
+                    //Esta función se llamará cuando la imagen haya sido cargada.
+                    imagenes[i].onload = function(){             
+                        imagenesCargadas++;
+                        //Comprobamos si están todas las imagenes cargadas
+                        if(imagenesCargadas == imagenesParaCargar.length) 
+                        {                                      
+                            console.log("Llamo callback");
+                            alert("Imágenes cargadas");
+                            //Llamada a la función principal del programa
+                            main(imagenes);                         
+                        }                                      
+                    }                                          
+                    console.log("Cargo imagen");  
+                    for (a = 0; a < 1000000000; a++)
+                    {}
+                    imagenes[i].src = imagenesParaCargar[i];                
+                }                                              
+                
+                console.log("Acabo carga imagenes");
+            }
+            var imagenesParaCargar = ["./images/Captura1.png",
+                "./images/Captura2.png",
+                "./images/Captura3.png",
+                "./images/Captura4.png",
+                "./images/Captura5.png",
+                "./images/Captura6.png",
+                "./images/Captura7.png",
+                "./images/Captura8.png",
+                "./images/Captura9.png",
+                "./images/Captura10.png"];
+            /*function ejecutar(){
+                loadImages(imagenesParaCargar,main);
+                }*/
+        </script>
+    </head>
+    <body>
+        <button onclick="loadImages(imagenesParaCargar, main)" class="bttnAccion">Cargar 5 imágenes aleatorias</button>
+        <div id="img"></div>
+    </body>
+</html>

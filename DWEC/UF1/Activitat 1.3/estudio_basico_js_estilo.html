@@ -1,0 +1,676 @@
+ <html>
+    <head>
+        <script type="text/javascript">
+            
+            //Función primera fila: Variables
+            function funcionVariables(){
+                var num1 = 5;
+                var num2 = 6;
+                var char1 = 'a';
+                var char2 = "b";
+                document.getElementById("variables1").innerHTML = num1 + num2;
+                document.getElementById("variables2").innerHTML = num1 + char1;
+                document.getElementById("variables3").innerHTML = char1 + char2;
+                document.getElementById("variables4").innerHTML = num1 + char2;
+            }
+
+            //Función segunda fila: Tipos de datos 
+            function tiposDatos(){
+                var string1 = "Ejemplo string doble comilla";
+                var string2 = 'Ejemplo string comilla simple';
+                var string3 = "Uso comilla doble entre comilla doble: peta";
+                var string4 = "Uso comilla simple entre comilla doble 'simple'";
+                var string5 = 'Uso comilla doble entre comilla simple "doble"';
+                
+                document.getElementById("tiposDatos").innerHTML =
+                        string1 + "</br></br>" +
+                        string2 + "</br></br>" +
+                        string3 + "</br></br>" +
+                        string4 + "</br></br>" +
+                        string5;
+            }
+            
+            //Función tercera fila: Objetos
+            function ejemploObjetos(){
+                var phone = {marca: "Huawei", modelo: "G520", color: "Negro", os: "Android 4.1", bluetooth: "4.0"};
+                document.getElementById("ejemploObjeto").innerHTML = phone.marca + " " + phone.modelo + " (" +
+                        phone.color + "), " + phone.os + ", " + "Bluetooth: " + phone.bluetooth;
+            }
+
+            //Función cuarta fila: Funciones
+            function calcularNotaMedia(a, b, c){
+                var resul = (a + b + c) / 3;
+                document.getElementById("resulNotaMedia").innerHTML = "Nota media: " + resul;
+            }
+
+            //Función quinta fila: Operadores
+            function operaciones(y, z){
+                suma = y + z;
+                division = y / z;
+                modulo = y % z;
+                document.getElementById("operacionSuma").innerHTML = "Suma (y + Z) = " + suma;
+                document.getElementById("operacionDivision").innerHTML = "División (y / Z) = " + division;
+                document.getElementById("operacionModulo").innerHTML = "Módulo (y % Z) = " + modulo;
+            }
+
+            //Función sexta fila: Comparadores
+            function comparador(){
+                var ale = Math.floor((Math.random() * 10) + 1);
+                num = document.getElementById("numComparar").value;
+                if (ale == num){
+                    document.getElementById("resulComp").innerHTML = "Enhorabuena! Has acertado!";
+                }
+                else if (ale > num){
+                    document.getElementById("resulComp").innerHTML = "Fallaste. El número era mayor (" + ale + ")";
+                }
+                else if (ale < num){
+                    document.getElementById("resulComp").innerHTML = "Fallaste. El número era menor (" + ale + ")";
+                }
+                else{
+                    document.getElementById("resulComp").innerHTML = "No has introducido ningún valor o valor válido.";
+                }
+            }
+
+            //Función séptima fila: Condiciones
+            function condicion(){
+                var ale = Math.floor((Math.random() * 10) + 1);
+                num = document.getElementById("numCond").value;
+                if (ale == num){
+                    document.getElementById("resulCond").innerHTML = "Enhorabuena! Has acertado!";
+                }
+                else if (ale > num){
+                    document.getElementById("resulCond").innerHTML = "Fallaste. El número era mayor (" + ale + ")";
+                }
+                else if (ale < num){
+                    document.getElementById("resulCond").innerHTML = "Fallaste. El número era menor (" + ale + ")";
+                }
+                else{
+                    document.getElementById("resulCond").innerHTML = "No has introducido ningún valor o valor válido.";
+                }
+            }
+
+            //Función octava fila: Switch
+            function diasMes(){
+                var mes;
+                mes = document.getElementById("mes").value;
+                var dias = 0;
+                var mostrar = true;
+                switch (mes){
+                    case "1": //Enero
+                        dias = 31;
+                        break;
+                    case "2": //Febrero
+                        dias = "28/29";
+                        break;
+                    case "3": //Marzo
+                        dias = 31;
+                        break;
+                    case "4": //Abril
+                        dias = 30;
+                        break;
+                    case "5": //Mayo
+                        dias = 31;
+                        break;
+                    case "6": //Junio
+                        dias = 30;
+                        break;
+                    case "7": //Julio
+                    case "8": //Agosto
+                        dias = 31;
+                        break;
+                    case "9": //Septiembre
+                        dias = 30;
+                        break;
+                    case "10": //Octubre
+                        dias = 31;
+                        break;
+                    case "11": //Noviembre
+                        dias = 30;
+                        break;
+                    case "12": //Diciembre
+                        dias = 31;
+                        break;
+                    default:
+                        mostrar = false;
+                        break;
+                }
+
+                if (mostrar){
+                    document.getElementById("diasMes").innerHTML = "El mes " + mes
+                            + " tiene " + dias + " dias.";
+                }
+                else{
+                    document.getElementById("diasMes").innerHTML = "Error, no existe ese mes.";
+                }
+            }
+
+            //Función novena fila: Loop For
+            function listarPersonas(){
+                var per1 = {nombre: "Juan", primerApellido: "Díaz", edad: "25"};
+                var per2 = {nombre: "Marc", primerApellido: "Guerrero", edad: "28"};
+                var per3 = {nombre: "Marta", primerApellido: "Falgueras", edad: "26"};
+                var per4 = {nombre: "Nadia", primerApellido: "Sánchez", edad: "25"};
+
+                var personas = [];
+                personas.push(per1);
+                personas.push(per2);
+                personas.push(per3);
+                personas.push(per4);
+
+                var res = "";
+                for (i = 0; i < personas.length; i++){
+                    res = res + "Persona " + (i + 1) + ": " + personas[i].nombre + " " +
+                            personas[i].primerApellido + " (" +
+                            personas[i].edad + ");" + "</br>";
+                }
+                document.getElementById("listaPersonas").innerHTML = res;
+            }
+
+            //Función décima fila: Loop While
+            function listarMasPersonas(){
+                var per1 = {nombre: "Juan", primerApellido: "Díaz", edad: "25"};
+                var per2 = {nombre: "Marc", primerApellido: "Guerrero", edad: "28"};
+                var per3 = {nombre: "Marta", primerApellido: "Falgueras", edad: "26"};
+                var per4 = {nombre: "Nadia", primerApellido: "Sánchez", edad: "25"};
+                var per5 = {nombre: "Sara", primerApellido: "Rodríguez", edad: "23"};
+                var per6 = {nombre: "Esther", primerApellido: "Rovira", edad: "29"};
+                
+                var masPersonas = [];
+                masPersonas.push(per1);
+                masPersonas.push(per2);
+                masPersonas.push(per3);
+                masPersonas.push(per4);
+                masPersonas.push(per5);
+                masPersonas.push(per6);
+                
+                var res = "";
+                var i = 0;
+                while (i < masPersonas.length){
+                    res = res + "Persona " + (i + 1) + ": " + masPersonas[i].nombre + " " +
+                            masPersonas[i].primerApellido + " (" +
+                            masPersonas[i].edad + ");" + "</br>";
+                    i++;
+                }
+                document.getElementById("listaMasPersonas").innerHTML = res;
+            }
+
+
+        </script>
+    </head>
+    <body>
+        <fieldset style=" width: 97%; border-radius: 5px; -moz-border-radius: 5px;">
+            <legend style="font-size:  20px; font-weight: bolder; color: gray;">Estudio básico javascript</legend>
+            <table>
+                <thead style="background-color: cornflowerblue;">
+                <th style="width: 50px;">Concepto</th>
+                <th style="width: 75%;">Código fuente</th>
+                <th style="width: 25%;">Resultado</th>
+                </thead>
+                <tbody style="background-color: lightgray;">
+                    <!-- Primera fila: Variables -->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Variables</td>
+                        <!-- Código fuente -->
+                        <td> 
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p id="variables1"></p>
+    <p id="variables2"></p>
+    <p id="variables3"></p>
+    <p id="variables4"></p>
+    
+    <script>
+        var num1 = 5;
+        var num2 = 6;
+        var char1 = 'a';
+        var char2 = "b";
+        document.getElementById("demo").innerHTML = num1 + num2;
+        document.getElementById("demo2").innerHTML = num1 + char1;
+        document.getElementById("demo3").innerHTML = char1 + char2;
+        document.getElementById("demo4").innerHTML = num1 + char2;
+    </script>
+  
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <button onclick="funcionVariables()">Probar</button>
+                            <p id="variables1"></p>
+                            <p id="variables2"></p>
+                            <p id="variables3"></p>
+                            <p id="variables4"></p>
+                        </td>
+                    </tr>
+                    <!-- Primera fila -->
+                    
+                    <!-- Segunda fila: Tipos de datos-->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Tipos datos</td>
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p id="tiposDatos"></p>
+
+    <script>
+        var string1 = "Ejemplo string doble comilla";
+        var string2 = 'Ejemplo string comilla simple';
+        var string3 = "Uso comilla doble entre comilla doble: peta";
+        var string4 = "Uso comilla simple entre comilla doble 'simple'";
+        var string5 = 'Uso comilla doble entre comilla simple "doble"';
+        document.getElementById("tiposDatos").innerHTML =
+                string1 + "</br></br>" + string2 + "</br></br>" +
+                string3 + "</br></br>" + string4 + "</br></br>" +
+                string5;
+    </script>
+
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <button onclick="tiposDatos()">Probar</button>
+                            <p id="tiposDatos"><p>
+                        </td>
+                    </tr>
+                    <!-- Segunda fila -->
+                    
+                    <!-- Tercera fila: Objetos -->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Objetos</td>
+                        <!-- Código fuente -->
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+ <!DOCTYPE html>
+<html>
+  <body>
+    <button onclick="ejemploObjetos()">Probar</button>
+    <p id="ejemploObjeto"></p>
+
+    <script>
+        var phone = {marca: "Huawei", modelo: "G520", color: "Negro", os: "Android 4.1", bluetooth: "4.0"};
+        document.getElementById("demo").innerHTML =
+                phone.marca + " " + phone.modelo + " (" + phone.color + "), " + phone.os + ", " + "Bluetooth: " + 
+                phone.bluetooth;
+    </script>
+
+  </body>
+</html>                  
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <button onclick="ejemploObjetos()">Probar</button>
+                            <p id="ejemploObjeto"></p>
+                        </td>
+                    </tr>
+                    <!-- Tercera fila -->
+                    
+                    <!-- Cuarta fila: Funciones -->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Funciones</td>
+                        <!-- Código fuente -->
+                        <td> 
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Notas: 4, 9, 8</p>
+    <button onclick="calcularNotaMedia(4, 9, 8)">Probar</button>
+    <p id="resulNotaMedia"></p>
+                       
+    <script>
+        function calcularNotaMedia(a, b, c)
+        {
+            var resul = (a + b + c) / 3;
+            document.getElementById("resulNotaMedia").innerHTML = "Nota media: " + resul;
+        }
+    </script>
+
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <button onclick="calcularNotaMedia(4, 9, 8)">Probar</button>
+                            <p id="resulNotaMedia"></p>                       
+                        </td>
+                    </tr>
+                    <!-- Cuarta fila -->
+                    
+                    <!-- Quinta fila: Operadores -->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Operadores</td>
+                        <!-- Código fuente -->
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>y = 12, z = 3</p>
+    <button onclick="operaciones(12, 3)">Calcular</button>
+    <p id="operacionSuma"></p>
+    <p id="operacionDivision"></p>
+    <p id="operacionModulo"></p>
+
+    <script>
+        function operaciones(y, z)
+        {
+            suma = y + z;
+            division = y / z;
+            modulo = y % z;
+            document.getElementById("operacionSuma").innerHTML = "Suma (y + Z) = " + suma;
+            document.getElementById("operacionDivision").innerHTML = "División (y / Z) = " + division;
+            document.getElementById("operacionModulo").innerHTML = "Módulo (y % Z) = " + modulo;
+        }
+    </script>
+
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <p>y = 12, z = 3</p>
+                            <button onclick="operaciones(12, 3)">Calcular</button>
+                            <p id="operacionSuma"></p>
+                            <p id="operacionDivision"></p>
+                            <p id="operacionModulo"></p>
+                        </td>
+                    </tr>
+                    <!-- Quinta fila -->
+                    
+                    <!-- Sexta fila: Comparadores -->
+                    <tr style="height: 215px;">
+                        <td>Comparadores</td>
+                        <!-- Código fuente -->
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Intenta adivinar el número a la primera (1-10)</p>
+    <input id="numComparar" type="text" value=""/>
+    <button onclick="comparador()">Probar!</button>
+    <p id="resulComp"></p>
+
+    <script>
+        function comparador()
+        {
+            var ale = Math.floor((Math.random() * 10) + 1);
+            num = document.getElementById("numComparar").value;
+            if (ale == num){
+                document.getElementById("resulComp").innerHTML = "Enhorabuena! Has acertado!";
+            }
+            else if (ale > num){
+                document.getElementById("resulComp").innerHTML = "Fallaste. El número era mayor (" + ale + ")";
+            }
+            else if (ale < num){
+                document.getElementById("resulComp").innerHTML = "Fallaste. El número era menor (" + ale + ")";
+            }
+            else{
+                document.getElementById("resulComp").innerHTML = "No has introducido ningún valor o valor válido.";
+            }
+        }
+    </script>
+
+  </body>
+</html>                            
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <p>Intenta adivinar el número a la primera (1-10)</p>
+                            <input id="numComparar" type="text" value=""/>
+                            <button onclick="comparador()">Probar!</button>
+                            <p id="resulComp"></p>
+                        </td>
+                    </tr>
+                    <!-- Sexta fila -->
+                    
+                    <!-- Séptima fila: Condiciones-->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Condiciones</td>
+                        <!-- Código fuente -->
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Intenta adivinar el número a la primera (1-10)</p>
+    <input id="numCond" type="text" value=""/>
+    <button onclick="condicion()">Probar!</button>
+    <p id="resulCond"></p>
+
+    <script>
+        function condicion()
+        {
+            var ale = Math.floor((Math.random() * 10) + 1);
+            num = document.getElementById("numCond").value;
+            if (ale == num){
+                document.getElementById("resulCond").innerHTML = "Enhorabuena! Has acertado!";
+            }
+            else if (ale > num){
+                document.getElementById("resulCond").innerHTML = "Fallaste. El número era mayor (" + ale + ")";
+            }
+            else if (ale < num){
+                document.getElementById("resulCond").innerHTML = "Fallaste. El número era menor (" + ale + ")";
+            }
+            else{
+                document.getElementById("resulCond").innerHTML = "No has introducido ningún valor o valor válido.";
+            }
+        }
+    </script>
+
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <p>Intenta adivinar el número a la primera (1-10)</p>
+                            <input id="numCond" type="text" value=""/>
+                            <button onclick="condicion()">Probar!</button>
+                            <p id="resulCond"></p>
+                        </td>
+                    </tr>
+                    <!-- Séptima fila -->
+                    
+                    <!-- Octava fila: Switch -->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Switch</td>
+                        <!-- Código fuente -->
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Introduce el mes y te diré los días que tiene</p>
+    <input id="mes" type="text" value=""/>
+    <button onclick="diasMes()">Probar!</button>
+    <p id="diasMes"></p>
+
+    <script>
+        function diasMes(){
+            mes = document.getElementById("mes").value;
+            var dias = 0;
+            var mostrar = true;
+            switch (mes){
+                case "1": //Enero
+                    dias = 31;
+                    break;
+                case "2": //Febrero
+                    dias = "28/29";
+                    break;
+                case "3": //Marzo
+                    dias = 31;
+                    break;
+                case "4": //Abril
+                    dias = 30;
+                    break;
+                case "5": //Mayo
+                    dias = 31;
+                    break;
+                case "6": //Junio
+                    dias = 30;
+                    break;
+                case "7": //Julio
+                case "8": //Agosto
+                    dias = 31;
+                    break;
+                case "9": //Septiembre
+                    dias = 30;
+                    break;
+                case "10": //Octubre
+                    dias = 31;
+                    break;
+                case "11": //Noviembre
+                    dias = 30;
+                    break;
+                case "12": //Diciembre
+                    dias = 31;
+                    break;
+                default:
+                    mostrar = false;
+                    break;
+            }
+            if (mostrar){
+                document.getElementById("diasMes").innerHTML = "El mes " + mes
+                        + " tiene " + dias + " dias.";
+            }
+            else{
+                document.getElementById("diasMes").innerHTML = "Error, no existe ese mes.";
+            }
+        }
+    </script>
+
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <p>Introduce el mes y te diré los días que tiene</p>
+                            <input id="mes" type="text" value=""/>
+                            <button onclick="diasMes()">Probar!</button>
+                            <p id="diasMes"></p>
+                        </td>
+                    </tr>
+                    <!-- Octava fila -->
+                    
+                    <!-- Novena fila: Loop For -->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Loop For</td>
+                        <!-- Código fuente -->
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Mostrar listado de personas (4)</p>
+    <button onclick="lsitarPersonas()">Listar</button>
+    <p id="listaPersonas"></p>
+
+    <script>
+        function listarPersonas()
+        {
+            var per1 = {nombre: "Juan", primerApellido: "Díaz", edad: "25"};
+            var per2 = {nombre: "Marc", primerApellido: "Guerrero", edad: "28"};
+            var per3 = {nombre: "Marta", primerApellido: "Falgueras", edad: "26"};
+            var per4 = {nombre: "Nadia", primerApellido: "Sánchez", edad: "25"};
+            var personas = [];
+            personas.push(per1);
+            personas.push(per2);
+            personas.push(per3);
+            personas.push(per4);
+            
+            var res = "";
+            for (i = 0; i < personas.length; i++){
+                res = res + "Persona " + (i + 1) + ": " + personas[i].nombre + " " +
+                        personas[i].primerApellido + " (" +
+                        personas[i].edad + ");" + "</br>";
+            }
+            document.getElementById("listaPersonas").innerHTML = res;
+        }
+    </script>
+
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <p>Mostrar listado de personas (4)</p>
+                            <button onclick="listarPersonas()">Listar</button>
+                            <p id="listaPersonas"></p>
+                        </td>
+                    </tr>
+                    <!-- Novena fila -->
+                    
+                    <!-- Décima fila: Loop While -->
+                    <tr style="height: 215px;">
+                        <td style="text-align: center;">Loop While</td>
+                        <!-- Código fuente -->
+                        <td>
+                            <textarea style="min-height: 211px; height: 100%; width: 100%; resize: none;" readonly="true">
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>Mostrar listado de personas (6)</p>
+    <button onclick="listarMasPersonas()">Listar</button>
+    <p id="listaMasPersonas"></p>
+
+    <script>
+        function listarMasPersonas()
+        {
+            var per1 = {nombre: "Juan", primerApellido: "Díaz", edad: "25"};
+            var per2 = {nombre: "Marc", primerApellido: "Guerrero", edad: "28"};
+            var per3 = {nombre: "Marta", primerApellido: "Falgueras", edad: "26"};
+            var per4 = {nombre: "Nadia", primerApellido: "Sánchez", edad: "25"};
+            var per5 = {nombre: "Sara", primerApellido: "Rodríguez", edad: "23"};
+            var per6 = {nombre: "Esther", primerApellido: "Rovira", edad: "29"};
+            var personas = [];
+            personas.push(per1);
+            personas.push(per2);
+            personas.push(per3);
+            personas.push(per4);
+            personas.push(per5);
+            personas.push(per6);
+            
+            var res = "";
+            i = 0;
+            while (i < personas.length){
+                res = res + "Persona " + (i + 1) + ": " + personas[i].nombre + " " +
+                        personas[i].primerApellido + " (" +
+                        personas[i].edad + ");" + "</br>";
+                i++;
+            }
+            document.getElementById("listaMasPersonas").innerHTML = res;
+        }
+        </script>
+
+  </body>
+</html>
+                            </textarea>
+                        </td>
+                        <!-- Llamada a la función -->
+                        <td>
+                            <p>Mostrar listado de personas (6)</p>
+                            <button onclick="listarMasPersonas()">Listar</button>
+                            <p id="listaMasPersonas"></p>
+                        </td>
+                    </tr>
+                    <!-- Décima fila -->
+                    
+                </tbody>
+            </table>
+        </fieldset>
+    </body>
+</html>

@@ -1,0 +1,354 @@
+<html>
+    <head>
+        <style>
+            *{
+                width: 100%;
+                max-width: 720px;
+            }
+            
+            table{
+                width: auto;
+                min-width: 200px;
+                max-width: 800px;
+                border: 3px solid #98b9ff;
+                border-collapse: collapse;
+                display: block;
+            }
+            
+            thead{
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+                font-size: 18px;
+            }
+            
+            th{
+                border: 2px solid cadetblue;
+                background-color: #98b9ff;
+                padding: 10px;
+            }
+            
+            td{
+                border: 1px solid black;    
+            }
+            
+            tbody .colRes{
+                width: 70px;
+                background-color: #d3e2ff;
+            }
+            .colVer{
+                width: 70px;
+                border: 2px solid cadetblue;
+                background-color: #98b9ff;
+                padding: 10px;
+            }
+            
+            .colCod{
+                width: 100%;
+            }
+            
+            .row{
+                height: 300px;
+            }
+            
+            textarea{
+                height: 300px;
+                resize: none;
+                border-collapse: collapse;
+                background-color: white;
+            }
+            
+            button{
+                background-color: dimgrey;
+                color: white;
+                border-radius: 5px;
+                display: block;
+            }
+            
+            .cursiva{
+                font-style: oblique;
+            }
+            
+            .pregunta{
+                font-weight: bold;
+            }
+            
+            .respuesta{
+                color: darkgray;
+            }
+        </style>
+        <script type="text/javascript">
+            function principal(){
+                console.log("Llamo a segunda() desde principal()");
+                segunda();
+                console.log("Acabo de llamar a segunda desde principal()");
+            }
+            function primera(){
+                var num = Math.floor(Math.random() * 10) + 1;
+                switch(num)
+                {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                        console.log("Llamo a segunda() desde primera()");
+                        segunda();
+                        break;
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        console.log("Llamo a tercera() desde primera()");
+                        tercera();
+                        break;
+                    default:
+                        console.log("Error generando numero aleatorio");
+                }
+            }
+            function segunda(){
+                console.log("Empieza la ejecucion de segunda()");
+                console.log("Entro en el bucle largo()");
+                console.log("Salgo del bucle largo()");
+                console.log("Acaba la ejecucion de segunda()");
+            }
+            function tercera(){
+                console.log("Empieza la ejecucion de tercera()");
+                console.log("Entro en el bucle largo()");
+                console.log("Salgo del bucle largo()");
+                console.log("Acaba la ejecucion de tercera()");
+            }
+            function cuarta(){
+                console.log("Empieza la ejecución de cuarta()");
+                alert("Este es el alert de cuarta() llamado 5 segundos después de llamar a prncipal()");
+                console.log("Acaba la ejecución de cuarta()");
+            }
+            
+            function clasica(){
+                console.log("Empieza la ejecucion de clasica()");
+                console.log("Llamo a segunda() desde clasica()");
+                segunda();
+                console.log("Acabo de llamar a segunda desde clasica()");
+                console.log("Llamo a tercera() desde clasica()");
+                tercera();
+                console.log("Acabo de llamar a tercera desde clasica()");
+                console.log("Acaba ña ejecucion de clasica()");
+            }
+            function conCallback(funcionAEjecutar){
+                console.log("Empieza la ejecución de conCallback()");
+                funcionAEjecutar();
+                console.log("Acaba la ejecución conCallback()");
+            }
+            function asincrona(funcion){
+                console.log("Empieza la ejecución de asincrona()");
+                console.log("Activo temporizador");
+                setTimeout(funcion, 5000);
+                principal();
+            }
+            
+            function bucle()
+            {
+                while(true)
+                    {
+                        console.log("<sgg");
+                    }
+            }
+            
+        </script>
+    </head>
+    <body>
+        <header>
+            <h2>Actividad 1.4.2: Uso de funciones Callback en JS</h2>
+        </header>
+        <div>
+            <table id="tabla">
+                <thead>
+                    <th class="colVer">Versión</th>
+                    <th class="colCod">Código</th>
+                    <th class="colRes">¡Prueba!</th>
+                </thead>
+                <tbody>
+                    <tr class="row">
+                        <td class="colVer">Clásica</td>
+                        <td class="colCod">
+                            <textarea readonly="true">
+<script type="text/javascript">
+    
+    function segunda(){
+        console.log("Empieza la ejecucion de segunda()");
+        console.log("Entro en el bucle largo()");
+        console.log("Salgo del bucle largo()");
+        console.log("Acaba la ejecucion de segunda()");
+    }
+    function tercera(){
+        console.log("Empieza la ejecucion de tercera()");
+        console.log("Entro en el bucle largo()");
+        console.log("Salgo del bucle largo()");
+        console.log("Acaba la ejecucion de tercera()");
+    }
+    function clasica(){
+        console.log("Empieza la ejecucion de clasica()");
+        console.log("Llamo a segunda() desde clasica()");
+        segunda();
+        console.log("Acabo de llamar a segunda desde clasica()");
+        console.log("Llamo a tercera() desde clasica()");
+        tercera();
+        console.log("Acabo de llamar a tercera desde clasica()");
+        console.log("Acaba ña ejecucion de clasica()");
+    }
+    
+    <button onclick="clasica()">Test</button>
+    
+</script>                                
+                            </textarea>
+                        </td>
+                        <td class="colRes">
+                            <button onclick="clasica()">Test</button>
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <td class="colVer">Callback</td>
+                        <td class="colCod">
+                            <textarea readonly="true">
+<script type="text/javascript">
+    
+    function primera(){
+        var num = Math.floor(Math.random() * 10) + 1;
+        switch(num)
+        {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+                console.log("Llamo a segunda() desde primera()");
+                segunda();
+                break;
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                console.log("Llamo a tercera() desde primera()");
+                tercera();
+                break;
+            default:
+                console.log("Error generando numero aleatorio");
+        }
+    }
+    function conCallback(funcionAEjecutar){
+        console.log("Empieza la ejecución de conCallback()");
+        funcionAEjecutar();
+        console.log("Acaba la ejecución conCallback()");
+    }
+    
+    <button onclick="conCallback(primera)">Test</button>
+    
+</script>
+                            </textarea>
+                        </td>
+                        <td class="colRes">
+                            <button onclick="conCallback(primera)">Test</button>
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <td class="colVer">Asíncrona</td>
+                        <td class="colCod">
+                            <textarea readonly="true">
+<script type="text/javascript">
+    
+    function principal(){
+        console.log("Llamo a segunda() desde principal()");
+        segunda();
+        console.log("Acabo de llamar a segunda desde principal()");
+    }
+    function segunda(){
+        console.log("Empieza la ejecucion de segunda()");
+        console.log("Entro en el bucle largo()");
+        console.log("Salgo del bucle largo()");
+        console.log("Acaba la ejecucion de segunda()");
+    }
+    function cuarta(){
+        console.log("Empieza la ejecución de cuarta()");
+        alert("Este es el alert de cuarta() llamado 5 segundos después de llamar a prncipal()");
+        console.log("Acaba la ejecución de cuarta()");
+    }
+    function asincrona(funcion){
+        console.log("Empieza la ejecución de asincrona()");
+        console.log("Activo temporizador");
+        setTimeout(funcion, 5000);
+        principal();
+    }
+    
+    <button onclick="asincrona(cuarta)">Test</button>
+    
+</script>
+                            </textarea>
+                        </td>
+                        <td class="colRes">
+                            <button onclick="asincrona(cuarta)">Test</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <br/>
+            <br/>
+            <div>
+                <h3>Conclusiones</h3>
+                <p class="pregunta">
+                    ¿Cómo ha ido?
+                    ¿Se ha comportado el programa como esperabas?
+                    Reflexiona sobre qué ventajas o aplicaciones prácticas podemos encontrar para las funciones con <span class="cursiva">callback</span>
+                </p>
+                <p class="respuesta cursiva">
+                    Ha ido más o menos como esperaba. Creo que es importante destacar que hay que tener cuidado
+                    cuando llamamos a una función desde un &lt;form&gt; ya que posiblemente no realice la operación
+                    esperada.
+                    Suponiendo que se ejecuta un proceso con un tiempo de ejecución prolongado, con una 
+                    función callback haríamos esperar a que terminase para ir a la siguiente línea.
+                </p>
+                <br/>
+                <p class="pregunta">
+                    ¿Puedo llamar a dos funciones callback dentro de otra función?  
+                </p>
+                <p class="respuesta cursiva">
+                    Sí, aunque la segunda no empezará a ejecutarse hasta que termine la primera.
+                </p>
+                <br/>
+                <p class="pregunta">
+                    ¿Puedo llamar a una función callback con parámetros?
+                </p>
+                <p class="respuesta cursiva">
+                    Sí.
+                </p>
+                <br/>
+                <p class="pregunta">
+                    ¿Miestras se ejecuta una función callback con mucha carga de trabajo, se pueden hacer
+                    otras cosas con la página web?
+                </p>
+                <p class="respuesta cursiva">
+                    No, simulando un bucle infinito, se queda en el bucle y no podemos realizar otra acción.
+                </p>
+                <br/>
+                <p class="pregunta">
+                    ¿Mientras se ejecuta una función asíncrona con mucha carga de trabajo, es posible
+                    hacer otras cosas con la página web?
+                </p>
+                <p class="respuesta cursiva">
+                    Siguiendo la teoría no debería causar ningún problema, pero a la hora de la práctica, esa
+                    carga de trabajo realentiza mucho y prácticamente no se puede hacer otra cosa.
+                    Por lo tanto, hay que tener cuidado con las funciones asíncronas.
+                </p>
+                <br/>
+                <p class="pregunta">
+                    ¿Mientras se ejecuta una función clásica con mucha carga de trabajo, se pueden hacer otras
+                    cosas con la página web?
+                </p>
+                <p class="respuesta cursiva">
+                    No.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

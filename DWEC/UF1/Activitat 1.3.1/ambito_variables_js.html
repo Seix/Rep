@@ -1,0 +1,271 @@
+<html>
+    <head>
+        <title>
+            Activitat 1.3.1: Scope
+        </title>
+        <style>
+           *{
+               font-family: Calibri;
+           }
+           table{
+               border: 1px solid black;
+               width: 750px;
+           }
+           
+           td{
+               border: 1px solid lightgrey;
+           }
+           
+           thead{
+               border-bottom: 1px solid dimgray;
+               background-color: activeborder;
+           }
+           #tCodi{
+               width: 75%;
+           }
+           #tResultat{
+               width: 25%;
+           }
+           .txtArea{
+               height: 176px;
+               width: 100%;
+               resize: none;
+           }
+           .tFila{
+               height: 180px;
+           }
+           
+        </style>
+        <script type="text/javascript">
+            // Exercici 1: 2 funcnions per a 2 botons que mostrin de quina 
+            //    ciutat ets
+            
+            //Funció per dir que ets de Barcelona
+            function ciutadaBCN1(){
+                var joSocDe = "Barcelona";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex1").innerHTML = "Jo soc de " + joSocDe;
+            }
+            //Funció per dir que ets de París
+            function ciutadaPAR1(){
+                var joSocDe = "Paris";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex1").innerHTML = "Jo soc de " + joSocDe;
+            }
+            
+            // Exercici 2: Igual que l'anterior afegint una variable externa
+                        
+            var  elMeuContinentEs2;
+            //Funció per dir que ets de Barcelona i el teu continent és Europa
+            function ciutadaBCN2(){
+                var joSocDe = "Barcelona";
+                var elMeuContinentEs2 = "Europa";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex2").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs2;
+            }
+            //Funció per dir que ets de París i el teu continent és Europa
+            function ciutadaPAR2(){
+                var joSocDe = "Paris";
+                var elMeuContinentEs2 = "Europa";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex2").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs2;
+            }
+            
+            // Exercici 3: Com l'exercici anterior, 1 modificació en 1 variable
+            //     per dir "jo sóc d'una ciutat d'Europa" en comptes de la ciutat
+            
+            var elMeuContinentEs3;
+            //const joSocDe = "una ciutat d'";
+            //Funció per dir que ets de Barcelona i el teu continent és Europa
+            function ciutadaBCN3(){
+                joSocDe = "Barcelona";
+                elMeuContinentEs3 = "Europa";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex3").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs3;
+            }
+            //Funció per dir que ets de París i el teu continent és Europa
+            function ciutadaPAR3(){
+                joSocDe = "Paris";
+                elMeuContinentEs3 = "Europa";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex3").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs3;
+            }
+            
+            var elMeuContinentEs4;
+            const joSocDe;
+            //Funció per dir que ets de Barcelona i el teu continent és Europa
+            function ciutadaBCN4(){
+                joSocDe = "Barcelona";
+                elMeuContinentEs4 = "Europa";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex4").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs4;
+            }
+            //Funció per dir que ets de París i el teu continent és Europa
+            function ciutadaPAR4(){
+                joSocDe = "Paris";
+                elMeuContinentEs4 = "Europa";
+                //Escribim el resultat en aquest mateix HTML
+                document.getElementById("ex4").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs4;
+            }
+        </script>
+    </head>
+    <body>
+        <header>
+            <h2>Activitat 1.3.1: Scope</h2>
+        </header>
+        <div>
+            <table>
+                <thead>
+                    <th id="tCodi">Codi</th>
+                    <th id="tResultat">Resultat</th>
+                </thead>
+                <tbody>
+                    <tr class="tFila">
+                        <td>
+                            <textarea class="txtArea">
+<script type="text/javascript">
+    //Funció per dir que ets de Barcelona
+    function ciutadaBCN1(){
+        var joSocDe = "Barcelona";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex1").innerHTML = "Jo soc de " + joSocDe;
+    }
+    //Funció per dir que ets de París
+    function ciutadaPAR1(){
+        var joSocDe = "Paris";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex1").innerHTML = "Jo soc de " + joSocDe;
+    }
+</script>
+(…)
+
+<h3>Exercici 1:</h3>
+<p id=”ex1”></p>
+<button onclick=”ciutadaBCN1()”>BCN</button>
+<button onclick=”ciutadaPAR1()”>PAR</button>
+
+                            </textarea>
+                        </td>
+                        <td>
+                            <h3>Exercici 1:</h3>
+                            <p id="ex1">Prem un dels botons</p>
+                            <button onclick="ciutadaBCN1()">BCN</button>
+                            <button onclick="ciutadaPAR1()">PAR</button>
+                        </td>
+                    </tr>
+                    <tr class="tFila">
+                        <td>
+                            <textarea class="txtArea">
+<script type="text/javascript">
+    var  elMeuContinentEs2;
+    //Funció per dir que ets de Barcelona i el teu continent és Europa
+    function ciutadaBCN2(){
+        var joSocDe = "Barcelona";
+        var elMeuContinentEs2 = "Europa";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex2").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs2;
+    }
+    //Funció per dir que ets de París i el teu continent és Europa
+    function ciutadaPAR2(){
+        var joSocDe = "Paris";
+        var elMeuContinentEs2 = "Europa";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex2").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs2;
+    }
+</script>
+
+(...)
+
+<h3>Exercici 2:</h3>
+<p id=”ex2”></p>
+<button onclick=”ciutadaBCN2()”>BCN</button>
+<button onclick=”ciutadaPAR2()”>PAR</button>
+                            </textarea>
+                        </td>
+                        <td>
+                            <h3>Exercici 2:</h3>
+                            <p id="ex2">Prem un dels botons</p>
+                            <button onclick="ciutadaBCN2()">BCN</button>
+                            <button onclick="ciutadaPAR2()">PAR</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea class="txtArea">
+<script type="text/javascript">
+    var elMeuContinentEs3;
+    const joSocDe = "una ciutat d'";
+    //Funció per dir que ets de Barcelona i el teu continent és Europa
+    function ciutadaBCN3(){
+        joSocDe = "Barcelona";
+        elMeuContinentEs3 = "Europa";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex3").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs3;
+    }
+    //Funció per dir que ets de París i el teu continent és Europa
+    function ciutadaPAR3(){
+        joSocDe = "Paris";
+        elMeuContinentEs3 = "Europa";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex3").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs3;
+    }
+</script>
+
+(...)
+
+<h3>Exercici 3:</h3>
+<p id="ex3">Prem un dels botons</p>
+<button onclick="ciutadaBCN3()">BCN</button>
+<button onclick="ciutadaPAR3()">PAR</button>
+                            </textarea>
+                        </td>
+                        <td>
+                            <h3>Exercici 3:</h3>
+                            <p id="ex3">Prem un dels botons</p>
+                            <button onclick="ciutadaBCN3()">BCN</button>
+                            <button onclick="ciutadaPAR3()">PAR</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea class="txtArea">
+<script type="text/javascript">
+    var elMeuContinentEs4;
+    const joSocDe;
+    //Funció per dir que ets de Barcelona i el teu continent és Europa
+    function ciutadaBCN4(){
+        joSocDe = "Barcelona";
+        elMeuContinentEs4 = "Europa";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex4").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs4;
+    }
+    //Funció per dir que ets de París i el teu continent és Europa
+    function ciutadaPAR4(){
+        joSocDe = "Paris";
+        elMeuContinentEs4 = "Europa";
+        //Escribim el resultat en aquest mateix HTML
+        document.getElementById("ex4").innerHTML = "Jo soc de " + joSocDe + " " + elMeuContinentEs4;
+    }
+</script>
+
+(...)
+
+<h3>Exercici 4:</h3>
+<p id="ex4">Prem un dels botons</p>
+<button onclick="ciutadaBCN4()">BCN</button>
+<button onclick="ciutadaPAR4()">PAR</button>
+                            </textarea>
+                        </td>
+                        <td>
+                            <h3>Exercici 4:</h3>
+                            <p id="ex4">Prem un dels botons</p>
+                            <button onclick="ciutadaBCN4()">BCN</button>
+                            <button onclick="ciutadaPAR4()">PAR</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

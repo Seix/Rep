@@ -1,0 +1,104 @@
+body{
+    //background-color: #f5ffe2;
+    background-image: url(../img/11868643614_41ab0f24f4.jpg);
+    background-repeat: repeat;
+}
+
+nav{
+    font-size: 14pt;
+    text-decoration: none;
+}
+
+a{
+    color: white;
+}
+
+.extra-link:hover{
+    background-color: #e6f2ea;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.trofeoIco{
+    max-height: 30px;
+    max-width: 30px;
+}
+
+.socialIco{
+    max-height: 40px;
+    max-width: 40px;
+}
+
+.img-lado-derecho{
+    max-width: 280px;
+    margin-top: 20px;
+}
+
+.jumbo-trans{
+    opacity: 0.8;
+    background-color: #e6f2ea;
+}
+
+.footer{
+    background-color: #666666;
+    text-align: center;
+    color: lightgrey;
+    padding: 10px 0px 10px 0px;
+}
+
+.footer > span{
+    padding: 10px 15px 10px 15px;
+}
+
+.extra-navbar{
+    background-color: #2a5b3c;
+    color: white;
+    border: 3px solid #e5e5e5;
+}
+
+.extra-button{
+    background-color: #2a5b3c;
+    border: 1px solid #e5e5e5;
+    font-size: 12pt;
+}
+
+.extra-button:hover{
+    background-color: #e5e5e5;
+    color: black;
+    border: 1px solid black;
+}
+
+.current{
+    background-color: #cee2d6;
+}
+
+.extra-panel{
+    margin-left: 5px;
+    margin-top: -22px;
+}
+
+.extra-panel-first{
+    margin-left: 5px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.extra-panel-heading-first{
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.panel-trans{
+    opacity: 0.8;
+    background-color: #e6f2ea;
+}
+
+.contenido{
+    margin-top: 15px;
+}
+
+#trofeos{
+    margin-left: 10px;
+}

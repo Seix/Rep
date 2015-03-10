@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+    <!-- Repasar para llamar haciendo callback -->
+    <!-- Hacer el tema de cookies y hacerlo pasar por un servidor (se puede usar brackets)-->
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="styles/estilos.css"/>
+        <script type="text/javascript">
+
+            //Función para cargar imágenes
+            function loadImages(imagenes, callback) {
+                var images = [];
+                var loadedImages = 0;
+
+                for (i = 0; i < imagenes.length; i++) {
+                    images[i] = new Image();
+                    images[i].onload = function () {
+                        loadedImages++;
+                        if (loadedImages == imagenes.length)
+                        {
+                            callback();
+                        }
+                    }
+                    images[i].src = imagenes[i];
+                }
+
+                console.log("Acabo carga imagenes");
+            }
+            
+            //Paths de las imágenes de bolas de lotería
+            var bolas = ["./images/num0.png",
+                "./images/num1.png",
+                "./images/num2.png",
+                "./images/num3.png",
+                "./images/num4.png",
+                "./images/num5.png",
+                "./images/num6.png",
+                "./images/num7.png",
+                "./images/num8.png",
+                "./images/num9.png"];
+            
+            //Función para generar un número aleatorio de lotería
+            function generarNumeroLoteria(callback)
+            {
+                var unidad = 0;
+                limpiarTabla();
+
+                if (callback != null)
+                {
+                    callback();
+                }
+                
+                //Temporizador para ir mostrando el resultado unidad por unidad
+                var myTimer = setInterval(function () {
+
+                    if (numeroMostrado() && unidad < 5)
+                    {
+                        var random = Math.random() * 10;
+                        random = random.toString().substring(0, 1);
+                        //obtener src de la img
+                        switch (unidad)
+                        {
+                            case 0:
+                                document.getElementById("decenasMillar").src = getSrc(random, bolas);
+                                document.getElementById("decenasMillar").alt = random;
+                                break;
+                            case 1:
+                                document.getElementById("unidadesMillar").src = getSrc(random, bolas);
+                                document.getElementById("unidadesMillar").alt = random;
+                                break;
+                            case 2:
+                                document.getElementById("centenas").src = getSrc(random, bolas);
+                                document.getElementById("centenas").alt = random;
+                                break;
+                            case 3:
+                                document.getElementById("decenas").src = getSrc(random, bolas);
+                                document.getElementById("decenas").alt = random;
+                                break;
+                            case 4:
+                                document.getElementById("unidades").src = getSrc(random, bolas);
+                                document.getElementById("unidades").alt = random;
+                                break;
+                        }
+                        unidad++;
+                    }
+                    else
+                    {
+                        console.log("Comparo el número");
+                        clearInterval(myTimer);
+                        compararNumero();
+                    }
+
+                }, 1000);
+            }
+            
+            //Función para comprobar que se han mostrado todas las unidades
+            function numeroMostrado()
+            {
+                var mostrado = true;
+                var elementos = document.getElementsByClassName("imgLoteria");
+
+                for (var i = 0; i < elementos.length; i++)
+                {
+                    if (elementos[i].src == "")
+                    {
+                        mostrado = false;
+                    }
+                }
+                return mostrado;
+            }
+            
+            //Función para comparar el resultado con el número introducido por el usuario
+            function compararNumero()
+            {
+                var nums = document.getElementById("sorteoLoteria").getElementsByTagName("img");
+                var numSorteo = [0, 0, 0, 0, 0];
+
+                for (i = 0; i < 5; i++)
+                {
+                    numSorteo[i] = nums[i].alt;
+                }
+                console.log("Numero sorteo: " + numSorteo);
+                var numsUser = document.getElementById("numLoteriaUsuario").value;
+                var numUser = [0, 0, 0, 0, 0];
+
+                for (i = 0; i < numsUser.length; i++)
+                {
+                    numUser[i] = numsUser[i];
+                }
+
+                console.log("Numero usuario: " + numUser);
+                var aciertos = 0;
+                for (i = 0; i < 5; i++)
+                {
+                    if (numUser[i] == numSorteo[i])
+                    {
+                        aciertos++;
+                    }
+                }
+
+                destacarCoincidencias(numSorteo, numUser);
+
+                if (aciertos > 0)
+                {
+                    console.log("Aciertos: " + aciertos);
+                }
+                else
+                {
+                    console.log("No hay aciertos");
+                }
+            }
+            
+            function getSrc(num, imagenes)
+            {
+                return imagenes[num];
+            }
+            
+            //Función para admitir sólo tipos numéricos en el campo de texto
+            function validarTecla()
+            {
+                var contenido = "" + document.getElementById("numLoteriaUsuario").value.toString();
+
+                if (isNaN(contenido.toString().substring(contenido.length - 1)))
+                {
+                    document.getElementById("numLoteriaUsuario").value = contenido.toString().substring(0, contenido.length - 1);
+                }
+            }
+            
+            //Función para comprobar la longitud del número introducido por el usuario y
+            //habilitar o deshabilitar el botón de juego según la longitud
+            function validarNumeroLoteria()
+            {
+                if (document.getElementById("numLoteriaUsuario").value.toString().length === 5)
+                {
+                    document.getElementById("bttnLoteria").removeAttribute("disabled");
+                }
+                else
+                {
+                    document.getElementById("bttnLoteria").setAttribute("disabled", true);
+                }
+            }
+
+            //Función para resaltar números acertados (verde) y no acertados (rojo) al pasar el cursor
+            //por encima del número del sorteo.
+            function destacarCoincidencias(numSorteo, numUser)
+            {
+                var celdas = document.getElementById("sorteoLoteria").getElementsByTagName("td");
+
+                for (var i = 0; i < 5; i++)
+                {
+                    if (numSorteo[i] === numUser[i])
+                    {
+                        celdas[i].setAttribute("class", "success");
+                    }
+                    else
+                    {
+                        celdas[i].setAttribute("class", "danger");
+                    }
+                }
+            }
+            
+            //Función para limpiar el contenido de la tabla y reestablecer el atributo class de
+            //cada celda
+            function limpiarTabla()
+            {
+                var celdas = document.getElementById("sorteoLoteria").getElementsByTagName("td");
+
+                for (var i = 0; i < 5; i++)
+                {
+                    celdas[i].removeAttribute("class");
+                }
+            }
+        </script>
+    </head>
+
+    <body class="text-center" onload="">
+        <div class="container text-center">
+            <div id="portada" class="col-md-8 col-md-offset-2">
+                <img src="images/CepMillones.png" alt="CepMillones"/>
+            </div>
+            <div class="col-md-12"><br/><br/><br/><br/></div>
+            <div id="loteria" class="col-md-12">
+                <table class="table-responsive table-hover table-condensed col-md-8 col-md-offset-2">
+                    <tfoot>
+                    <td class="text-center">Dec. millar</td>
+                    <td class="text-center">Und. millar</td>
+                    <td class="text-center">Centenas</td>
+                    <td class="text-center">Decenas</td>
+                    <td class="text-center">Unidades</td>
+                    </tfoot>
+                    <tbody>
+                        <tr id="sorteoLoteria" class="text-center">
+                            <td><img id="decenasMillar" src="" alt=""></td>
+                            <td><img id="unidadesMillar" src="" alt=""></td>
+                            <td><img id="centenas" src="" alt=""></td>
+                            <td><img id="decenas" src="" alt=""></td>
+                            <td><img id="unidades" src="" alt=""></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-md-12"><br/><br/></div>
+                <div class="col-md-12">
+                    <p>Introduce aquí tu número. ¡Mucha suerte!</p>
+                </div>
+                <div class="input-goup text-center col-md-8 col-md-offset-2">
+                    <input id="numLoteriaUsuario" type="text" maxlength="5" class="text-center" onkeyup="validarTecla(), validarNumeroLoteria()"/>
+                    <button id="bttnLoteria" type="button" class="btn btn-primary" onclick="loadImages(bolas, generarNumeroLoteria())" disabled="">Jugar</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
