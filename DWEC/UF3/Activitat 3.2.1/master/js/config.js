@@ -1,19 +1,36 @@
-var config = ( function () 
+var config = (function () 
 {
-    var dificulad;
+    //Número de intentos. Inicialmente a 10
+    var dif = 10;
+    //Permitir reperición de colores al generar automáticamente.
+    var repCol = true;
     
-    function setDificultad(nivel)
+    function propDificultad()
     {
-        dificultad = nivel;
+        return dif;
     }
     
-    function getDificultad()
+    function setPropDificultad(valor)
     {
-        return dificultad;
+        dif = valor;
+        console.log("Dificultad: " + dif);
+    }
+    
+    function propRepetirColores()
+    {
+        return repCol;
+    }
+    
+    function setPropRepetirColores(valor)
+    {
+        repetirColores = valor;
+        console.log("Repeticion de colores: " + repCol);
     }
     
     return{                 
-        pub_getDificultad : getDificultad,
-        pub_setDificultad : setDificultad
+        pub_setPropDificultad : setPropDificultad,
+        pub_propDificultad : propDificultad,
+        pub_setPropRepetirColores : setPropRepetirColores,
+        pub_propRepetirColores : propRepetirColores
     } 
 }());

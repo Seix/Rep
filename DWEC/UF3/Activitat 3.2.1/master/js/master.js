@@ -1,129 +1,114 @@
-var master = (function()
+var master = (function ()
 {
     var filaAleatoria = [];
     var filaUsuario = [];
+    var aciertos;
 
     //Función para generar una fila aleatoria
     function generarFilaAleatoria()
     {
-        for (var i = 0; i < 5; i++)
+        //Llenamos el array aleatorio
+        while (filaAleatoria.length < 5)
         {
-            var clase = "";
-            switch (Math.floor(Math.random() * 6))
+            aciertos = 0;
+            
+            //Generamos un número aleatorio y lo convertimos a número romano
+            //para hacerlo coincidir con la clase que necesitaremos
+            var ran = Math.floor(Math.random() * 6);
+            var clase = utils.pub_numToRoman(ran);
+            
+            //Comprobamos en el fichero de configuración si puede o no
+            //repetirse un mismo color antes de guardar un valor
+            if (!config.pub_propRepetirColores())
             {
-                case 0:
-                    clase = "I";
-                    break;
-                case 1:
-                    clase = "II";
-                    break;
-                case 2:
-                    clase = "III";
-                    break;
-                case 3:
-                    clase = "IV";
-                    break;
-                case 4:
-                    clase = "V";
-                case 5:
-                    clase = "VI";
-                    break;
+                if ($.inArray(clase, filaAleatoria) === -1) {
+
+                    filaAleatoria.push(clase);
+                }
             }
-            filaAleatoria[i] = clase;
+            else
+            {
+                filaAleatoria.push(clase);
+            }
         }
+        
         console.log("Fila aleatoria: " + filaAleatoria);
     }
 
-    function comprobarBolas(bolas)
+    //Contador de bolas de la jugada que cumplen con color y posición respecto
+    //al array aleatorio
+    function cuantasBolasOk()
     {
-        var existen = [];
-        var existenPlus = [];
-        var nada = [];
-        var final = [];
+        var count = 0;
 
         for (var i = 0; i < 5; i++)
         {
-            res = comprobarBola(bolas[i]);
+            var j = 0;
+            var encontrada = false;
 
-            if (res == "no")
+            while (j < 5 && !encontrada)
             {
-                nada.push(res);
-            }
-            else if (res == "ko")
-            {
-                existen.push(res);
-            }
-            else if (res == "ok")
-            {
-                existenPlus.push(res);
+                if (filaUsuario[i] === filaAleatoria[j] && i === j)
+                {
+                    encontrada = true;
+                    count++;
+                }
+                j++;
             }
         }
 
-        if (existenPlus.length > 0)
-        {
-            final.push.apply(final, existenPlus);
-        }
-        if (existen.length > 0)
-        {
-            final.push.apply(final, existen);
-        }
-        if (nada.length > 0)
-        {
-            final.push.apply(final, nada);
-        }
-
-        return final;
+        return count;
     }
-    
+
+    //Contador de bolas de la jugada que aparecen en el array aleatorio
+    function cuantasBolasKo()
+    {
+        var count = 0;
+        var encontradas = [];
+
+        for (var i = 0; i < 5; i++)
+        {
+            var j = 0;
+
+            while (j < 5)
+            {
+                if (filaUsuario[i] === filaAleatoria[j] && $.inArray(filaUsuario[i], encontradas) === -1)
+                {
+                    count++;
+                    encontradas.push(filaUsuario[i]);
+                }
+                j++;
+            }
+        }
+        return count;
+    }
+
+    //Función que compara las bolas generadas aleatoriamente al principio del
+    //juego con las de la jugada del usuario proporcionando la pista al usuario.
     function comprobarBolas()
     {
         var resultado = [];
-        
-        for(var i = 0; i < 5; i++)
+        var bolaOk = cuantasBolasOk();
+        var bolaKo = cuantasBolasKo();
+
+        aciertos = bolaOk;
+
+        for (var i = 0; i < bolaOk; i++)
         {
-            var res = "no";
-            
-            for(var j = 0; j < 5; i++)
-            {
-                if(filaUsuario[i] == filaAleatoria[j])
-                {
-                    res = "ko";
-                    
-                    if(i == j)
-                    {
-                       res = "ok"; 
-                    }
-                }
-                resultado.push(res);
-            }
+            resultado.push("ok");
         }
-        
+
+        for (var i = 0; i < bolaKo; i++)
+        {
+            resultado.push("ko");
+        }
+
+        while (resultado.length <= 5)
+        {
+            resultado.push("no");
+        }
+
         return resultado;
-    }
-    
-    function comprobarBola(bola)
-    {
-        var num = bola[4];
-        console.log(bola + " : " + num);
-        var res = "no";
-        var i = 0;
-        var claseBola = document.getElementById(bola).getAttribute("class").valueOf().split(" ")[1];
-
-        while (i < 5 && res == "no")
-        {
-            if (filaAleatoria[i] == claseBola)
-            {
-                res = "ko";
-
-                if (num == i)
-                {
-                    res = "ok";
-                }
-            }
-            i++;
-        }
-        console.log("Resultado comprobación: Bola " + num + " + clase " + claseBola + " = " + res);
-        return res;
     }
 
     function setFilaUsuario(fila)
@@ -131,9 +116,22 @@ var master = (function()
         filaUsuario = fila;
     }
 
+    function isAcertado()
+    {
+        var result = false;
+
+        if (aciertos === 5)
+        {
+            result = true;
+        }
+        return result;
+    }
+
+
     return{
         pub_comprobarBolas: comprobarBolas,
         pub_generarFilaAleatoria: generarFilaAleatoria,
-        pub_setFilaUsuario: setFilaUsuario
+        pub_setFilaUsuario: setFilaUsuario,
+        pub_isAcertado: isAcertado
     }
 }());
