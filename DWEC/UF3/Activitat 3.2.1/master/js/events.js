@@ -5,6 +5,7 @@ var events = (function () {
             masterui.pub_slider();
             masterui.pub_cambioColorBola();
             masterui.pub_jugarPartida();
+            masterui.pub_filtrarTeclado();
         });
     }
     return {

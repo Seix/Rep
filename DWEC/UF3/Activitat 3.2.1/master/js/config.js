@@ -4,6 +4,8 @@ var config = (function ()
     var dif = 10;
     //Permitir reperición de colores al generar automáticamente.
     var repCol = true;
+    //Modo debug
+    var debug = false;
     
     function propDificultad()
     {

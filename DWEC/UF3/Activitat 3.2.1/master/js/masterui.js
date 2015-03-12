@@ -232,11 +232,78 @@ var masterui = (function () {
         }
 
     }
+    
+    function filtrarTeclado()
+    {
+        $("#txtbx-juego").keypress(function(key)
+        {
+            if(key.wich === 13)
+            {
+                var texto = document.getElementById("txtbx-juego").textContent;
+                //else if (/^[0-6]+$/.test(cadena))
+                if($.inArray("[a-zA-Z6-9]", texto) !== -1)
+                {
+                   convertirCadena(texto); 
+                }
+                else
+                {
+                    alert("Datos introducidos incorrectos");
+                }
+            }
+        });
+    }
+    
+    function convertirCadena(texto)
+    {
+        var filaCon = [];
+        for(var i = 0; i < texto.length; i++)
+        {
+            filaCon.push(master.pub_numToRoman(texto[i]));
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    function filtrarTeclado()
+    {
+        //Entraremos dentro cuando le demos a Enter
+        if(event.keyCode == 13){
+            var cadena = document.getElementById(event.data.campo).value;        
+            
+            //La primera comprobacion sera si la cadena esta vacia
+            if (cadena == "") {
+                alert('Escribe un número.');
+            }
+            
+            //La segunda comprobacion es si la cadena es menor a 5
+            else if (cadena.length < 5) {
+                alert('No has escrito el número entero.');
+            }
+            
+            //La siguiente comprobacion es una expresion regular que entrara 
+            //si la cadena solo tiene valores del 0-6 si es asi ejecuta otra funcion
+            else if (/^[0-6]+$/.test(cadena)) {
+                cadenacolores(cadena);
+            }
+            
+            //Si no hay alguna cosa correcta salta un alert
+            else {
+                alert('Escribe bien el número.');
+            } 
+        }
+    }
 
     //Devolución de métodos públicos
     return{
         pub_slider: slider,
         pub_cambioColorBola: cambioColorBola,
-        pub_jugarPartida: jugarPartida
+        pub_jugarPartida: jugarPartida,
+        pub_filtrarTeclado : filtrarTeclado
     }
 }());
