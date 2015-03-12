@@ -8,12 +8,13 @@
         <link href="style/jquery-ui.css" rel="stylesheet">
 
         <!-- Scripts -->
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/config.js"></script>
+        
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
 
-        <script type="text/javascript" src="js/utils.js"></script>
-        <script type="text/javascript" src="js/config.js"></script>
         <script type="text/javascript" src="js/events.js"></script>
         <script type="text/javascript" src="js/master.js"></script>
         <script type="text/javascript" src="js/masterui.js"></script>       
@@ -45,108 +46,7 @@
             </div>
             <!-- Fila jugada -->
             <div class="clearfix fila text-center">
-                <div class="col-lg-12 col-md-12 col-sm-12 contenido-fila">
-
-                    <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 paddingcero" >
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="bola0" class="no bola"></div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 selector-group">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 I selector" parent="bola0">1</div>
-                                <div class="col-md-4 II selector" parent="bola0">2</div>
-                                <div class="col-md-4 III selector" parent="bola0">3</div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 IV selector" parent="bola0">4</div>
-                                <div class="col-md-4 V selector" parent="bola0">5</div>
-                                <div class="col-md-4 VI selector" parent="bola0">6</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bola + selector -->
-                    <div class="col-xs-1 paddingcero" >
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="bola1" class="no bola"></div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 selector-group">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 I selector" parent="bola1">1</div>
-                                <div class="col-md-4 II selector" parent="bola1">2</div>
-                                <div class="col-md-4 III selector" parent="bola1">3</div>
-                            </div>
-                            <div class="col-md-12 paddingcero" >
-                                <div class="col-md-4 IV selector" parent="bola1">4</div>
-                                <div class="col-md-4 V selector" parent="bola1">5</div>
-                                <div class="col-md-4 VI selector" parent="bola1">6</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bola + selector -->
-                    <div class="col-xs-1 paddingcero" >
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="bola2" class="no bola"></div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 selector-group">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 I selector" parent="bola2">1</div>
-                                <div class="col-md-4 II selector" parent="bola2">2</div>
-                                <div class="col-md-4 III selector" parent="bola2">3</div>
-                            </div>
-                            <div class="col-md-12 paddingcero" >
-                                <div class="col-md-4 IV selector" parent="bola2">4</div>
-                                <div class="col-md-4 V selector" parent="bola2">5</div>
-                                <div class="col-md-4 VI selector" parent="bola2">6</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bola + selector -->
-                    <div class="col-xs-1 paddingcero" >
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="bola3" class="no bola"></div>
-                        </div>
-                        <div id="selector4" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 selector-group">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 I selector" parent="bola3">1</div>
-                                <div class="col-md-4 II selector" parent="bola3">2</div>
-                                <div class="col-md-4 III selector" parent="bola3">3</div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 IV selector" parent="bola3">4</div>
-                                <div class="col-md-4 V selector" parent="bola3">5</div>
-                                <div class="col-md-4 VI selector" parent="bola3">6</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Bola + selector -->
-                    <div class="col-xs-1 paddingcero" >
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="bola4" class="no bola"></div>
-                        </div>
-                        <div id="selector5" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 selector-group">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 I selector" parent="bola4">1</div>
-                                <div class="col-md-4 II selector" parent="bola4">2</div>
-                                <div class="col-md-4 III selector" parent="bola4">3</div>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero" >
-                                <div class="col-md-4 IV selector" parent="bola4">4</div>
-                                <div class="col-md-4 V selector" parent="bola4">5</div>
-                                <div class="col-md-4 VI selector" parent="bola4">6</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-2"><span id="intento" class="num-intento">1</span></div>
-                    <div class="col-xs-1"></div>
-                    <div class="col-xs-1"></div>
-                    <div class="col-xs-3">
-                        <button id="btn-juego" class="btn-primary btn-juego">Empezar a jugar</button>
-                    </div>
-                </div>
+                <div id="filaJugada" class="col-lg-12 col-md-12 col-sm-12 contenido-fila"></div>
             </div>
             <!-- Fin fila jugada -->
 
@@ -163,9 +63,7 @@
             <!-- Fin jugada rapida -->
 
             <!-- Jugada anterior --> 
-            <div id="jugadas">
-
-            </div>
+            <div id="jugadas"></div>
             <!-- Fin jugada anterior -->
 
         </div>

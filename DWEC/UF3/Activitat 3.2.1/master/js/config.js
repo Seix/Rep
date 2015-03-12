@@ -1,38 +1,14 @@
-var config = (function () 
-{
-    //Número de intentos. Inicialmente a 10
+var config = (function (){
+    
     var dif = 10;
-    //Permitir reperición de colores al generar automáticamente.
     var repCol = true;
-    //Modo debug
     var debug = false;
-    
-    function propDificultad()
-    {
-        return dif;
+    var bolas = 5;
+
+    return{
+        pub_dificultad: dif,
+        pub_repetirColores: repCol,
+        pub_debug: debug,
+        pub_cantidadBolas: bolas
     }
-    
-    function setPropDificultad(valor)
-    {
-        dif = valor;
-        console.log("Dificultad: " + dif);
-    }
-    
-    function propRepetirColores()
-    {
-        return repCol;
-    }
-    
-    function setPropRepetirColores(valor)
-    {
-        repetirColores = valor;
-        console.log("Repeticion de colores: " + repCol);
-    }
-    
-    return{                 
-        pub_setPropDificultad : setPropDificultad,
-        pub_propDificultad : propDificultad,
-        pub_setPropRepetirColores : setPropRepetirColores,
-        pub_propRepetirColores : propRepetirColores
-    } 
 }());

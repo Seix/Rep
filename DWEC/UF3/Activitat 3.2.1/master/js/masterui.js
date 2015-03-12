@@ -1,4 +1,10 @@
 var masterui = (function () {
+    
+    /*
+     * Hacer funcionar el filtro de entrada de la caja de texto
+     * (Llamada a la función comentada)
+     */
+    
     var inicio = true;
     var resultados = [];
     var numIntento;
@@ -7,13 +13,13 @@ var masterui = (function () {
     function slider() {
 
         $("#slider").slider({
-            value: config.pub_propDificultad(),
+            value: config.pub_dificultad,
             min: 1,
             max: 10,
             step: 1,
             slide: function (event, ui) {
                 $("#dificultad").val(ui.value);
-                config.pub_setPropDificultad(ui.value);
+                config.pub_dificultad = ui.value;
             }
         });
         $("#dificultad").val($("#slider").slider("value"));
@@ -65,74 +71,34 @@ var masterui = (function () {
     function generarFila()
     {
         var fila = "";
-
+        
         fila += "<div class='clearfix fila text-center'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 contenido-fila'>\n\
-                    <div class='col-lg-1 col-md-1 col-sm-1 col-xs-1 paddingcero'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+                    <div class='col-lg-12 col-md-12 col-sm-12 contenido-fila'>";
 
-        fila += "<div class='" + getClassBola("bola0") + "'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1 paddingcero' >\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
+        for(var i = 0; i < config.pub_cantidadBolas; i++)
+        {   
+                fila+= "<div class='col-xs-1 paddingcero'>\n\
+                            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n\
+                                <div class='" + getClassBola("bola"+i) + "'></div>\n\
+                            </div>\n\
+                        </div>";
+        }
 
-        fila += "<div class='" + getClassBola("bola1") + "'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1 paddingcero'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + getClassBola("bola2") + "'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1 paddingcero' >\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + getClassBola("bola3") + "'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1 paddingcero' >\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + getClassBola("bola4") + "'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-2'>"
-
-        fila += "<span class='num-intento'>" + getNumIntento() + "</span></div>";
-        fila += "<div class='col-xs-1'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + resultados[0] + " bola'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + resultados[1] + " bola'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + resultados[2] + " bola'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + resultados[3] + " bola'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    <div class='col-xs-1'>\n\
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>";
-
-        fila += "<div class='" + resultados[4] + " bola'></div>";
-        fila += "</div>\n\
-                    </div>\n\
-                    </div>\n\
-                    </div>";
+                fila += "<div class='col-xs-2'>\n\
+                            <span class='num-intento'>" + getNumIntento() + "</span>\n\
+                        </div>";
+        
+        for(var i = 0; i < config.pub_cantidadBolas; i++)
+        {   
+                fila += "<div class='col-xs-1'>\n\
+                            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n\
+                                <div class='" + resultados[i] + " bola'></div>\n\
+                            </div>\n\
+                        </div>";
+        }
+        
+        fila+=      "</div>\n\
+                </div>";
 
         $("#jugadas").prepend(fila);
         setNumIntento();
@@ -149,7 +115,8 @@ var masterui = (function () {
     {
         return document.getElementById("intento").textContent;
     }
-
+    
+    //Modifica el número de intento en el panel de juego
     function setNumIntento()
     {
         document.getElementById("intento").textContent = numIntento;
@@ -162,7 +129,7 @@ var masterui = (function () {
         numIntento = document.getElementById("intento").textContent;
         var estado = false;
 
-        if (numIntento > config.pub_propDificultad())
+        if (numIntento > config.pub_dificultad)
         {
             estado = true;
             document.getElementById("intento").textContent = 1
@@ -170,11 +137,12 @@ var masterui = (function () {
         return estado;
     }
 
+    //Función para obtener la fila del usuario desde el HTML
     function getFilaUsuariohtml()
     {
         var jugada = [];
 
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < config.pub_cantidadBolas; i++)
         {
             jugada[i] = (getClassBola("bola" + i)).split(" ")[1];
         }
@@ -190,13 +158,14 @@ var masterui = (function () {
     //Función para limpiar las bolas
     function limpiarBolas()
     {
-        for (var i = 0; i < 5; i++)
+        for (var i = 0; i < config.pub_cantidadBolas; i++)
         {
             $("#bola" + i).removeClass("I II III IV V VI");
             $("#bola" + i).addClass("no");
         }
     }
 
+    //Inicializa, limpia y setea variables para el inicio una nueva partida
     function reiniciarJuego()
     {
         limpiarJugadas();
@@ -206,6 +175,7 @@ var masterui = (function () {
         setNumIntento();
     }
     
+    //Inicializa, limpia y setea variables para el inicio del juego
     function inicializarJuego()
     {
         limpiarJugadas();
@@ -213,26 +183,23 @@ var masterui = (function () {
         numIntento = 1;
         setNumIntento();
     }
-
+    
+    //Función que cambia el texto del botón según el estado del juego
     function estadoBoton()
     {
-        var btnTxt = document.getElementById("btn-juego").textContent;
-
-        if (btnTxt == "Empezar a jugar" && !acabado)
+        if (!inicio && !acabado())
         {
             document.getElementById("btn-juego").textContent = "Comprobar jugada";
         }
-        else if (btnTxt == "Comprobar jugada" && acabado)
-        {
-            document.getElementById("btn-juego").textContent = "Reinicar juego";
-        }
-        else if (btnTxt == "Reiniciar juego")
+        else if (inicio)
         {
             document.getElementById("btn-juego").textContent = "Empezar a jugar";
         }
 
     }
     
+    //Función que filtra los datos introducidos en el campo de texto del panel
+    //de juego
     function filtrarTeclado()
     {
         $("#txtbx-juego").keypress(function(key)
@@ -253,23 +220,19 @@ var masterui = (function () {
         });
     }
     
+    //Función para convertir un array de enteros introducida a numeros romanos
     function convertirCadena(texto)
     {
         var filaCon = [];
         for(var i = 0; i < texto.length; i++)
         {
-            filaCon.push(master.pub_numToRoman(texto[i]));
+            filaCon.push(utils.pub_numToRoman(texto[i]));
         }
+        return filaCon;
     }
     
     
-    
-    
-    
-    
-    
-    
-    
+    //Ejemplo de alguien
     function filtrarTeclado()
     {
         //Entraremos dentro cuando le demos a Enter
@@ -298,12 +261,49 @@ var masterui = (function () {
             } 
         }
     }
+    
+    //Función que crea el panel de juego necesario para la cantidad de bolas configuradas
+    function crearPanelJuego()
+    {
+        var texto = "";
+
+        for(var i = 0; i < config.pub_cantidadBolas; i++)
+        {
+            texto+= "<div class='col-xs-1 paddingcero'>\n\
+                        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n\
+                            <div id='bola" + i + "' class='no bola'></div>\n\
+                            </div>\n\
+                        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 selector-group'>\n\
+                            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero'>\n\
+                                <div class='col-md-4 I selector' parent=bola" + i + ">1</div>\n\
+                                <div class='col-md-4 II selector' parent=bola" + i + ">2</div>\n\
+                                <div class='col-md-4 III selector' parent=bola" + i + ">3</div>\n\
+                            </div>\n\
+                            <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 paddingcero'>\n\
+                                <div class='col-md-4 IV selector' parent=bola" + i + ">4</div>\n\
+                                <div class='col-md-4 V selector' parent=bola" + i + ">5</div>\n\
+                                <div class='col-md-4 VI selector' parent=bola" + i + ">6</div>\n\
+                            </div>\n\
+                        </div>\n\
+                    </div>";    
+        }
+        
+        texto += "<div class='col-xs-2'><span id='intento' class='num-intento'>1</span></div>\n\
+                    <div class='col-xs-1'></div>\n\
+                    <div class='col-xs-1'></div>\n\
+                    <div class='col-xs-3'>\n\
+                        <button id='btn-juego' class='btn-primary btn-juego'>Empezar a jugar</button>\n\
+                    </div>";
+        
+        $("#filaJugada").append(texto);
+    }
 
     //Devolución de métodos públicos
     return{
         pub_slider: slider,
         pub_cambioColorBola: cambioColorBola,
         pub_jugarPartida: jugarPartida,
-        pub_filtrarTeclado : filtrarTeclado
+        pub_filtrarTeclado : filtrarTeclado,
+        pub_crearPanelJuego: crearPanelJuego
     }
 }());
