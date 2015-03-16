@@ -1,10 +1,5 @@
 var masterui = (function () {
 
-    /*
-     * Hacer funcionar el filtro de entrada de la caja de texto
-     * (Llamada a la función comentada)
-     */
-
     var inicio = true;
     var resultados = [];
     var numIntento;
@@ -35,7 +30,7 @@ var masterui = (function () {
         });
     }
 
-    //Función para iniciar/continuar con el juego
+    //Función que captura el evento del botón de juego
     function jugarPartida() {
         $("#btn-juego").click(function()
         {
@@ -43,6 +38,7 @@ var masterui = (function () {
         });
     }
 
+    //Función para iniciar/continuar con el juego
     function partida() {
         if (inicio)
         {
@@ -50,7 +46,7 @@ var masterui = (function () {
             master.pub_generarFilaBolas();
             inicio = false;
         }
-
+        
         getFilaUsuariohtml();
         resultados = master.pub_comprobarBolas();
         numIntento++;
@@ -210,7 +206,6 @@ var masterui = (function () {
     {
         $("#txtbx-juego").keydown(function (key)
         {
-            //console.log(key.keyCode);
             if (key.keyCode === 13)
             {
                 var texto = document.getElementById("txtbx-juego").value;
@@ -228,7 +223,9 @@ var masterui = (function () {
             }
         });
     }
-
+    
+    //Función que cambia el color de las bolas a partir de un array recibido
+    //por parámetro
     function colorearBolas(colores)
     {
         for (var i = 0; i < colores.length; i++)
@@ -274,6 +271,76 @@ var masterui = (function () {
         $("#filaJugada").append(texto);
         $("#txtbx-juego").prop("maxlength", config.pub_cantidadBolas);
     }
+    
+    //Función que activa/desactiva modo debug cuando el usuario hace doble click
+    //en el título de la página
+    function modoDebug()
+    {
+        $("#titulo").on("dblclick", (function()
+        {
+            if(config.pub_debug == false)
+            {
+                config.pub_debug = true;
+                alert("Activado modo debug");
+                reiniciarJuego();
+            }
+            else
+            {
+                config.pub_debug = false;
+                alert("Desactivado modo debug");
+                reiniciarJuego();
+            }
+            herramientas();
+        }));
+    }
+    
+    //Función que muestra o no las herramientas del modo debug
+    function herramientas()
+    {
+        if(config.pub_debug)
+        {
+            var texto = "<div class='col-md-6 form-group'>\n\
+                            <label class='control-label'>Cantidad bolas: </label>\n\
+                            <input id='config-num-bolas' class='form-control' type='text'>\n\
+                            <label class='control-label'>Fila oculta: </label>\n\
+                            <input id='config-bolas' class='form-control' type='text' value='1641'>\n\
+                            </div>";
+            $("#herramientas").append(texto);
+        }
+        else
+        {
+            $("#herramientas").empty();
+        }
+    }
+    
+    //Pendiente de probar: Función que captura los eventos/valores introducidos en las
+    //herramientas de debug
+    function debugConfig()
+    {
+        $("#config.num-bolas").onKeydown(function()
+        {
+           if($.isNaN($(this).valueOf()) && $(this).valueOf() > 0 && $(this).valueOf() > 10)
+           {
+                config.pub_CantidadBolas = $(this).valueOf();
+           }
+           else
+           {
+               alert("Solo valores numéricos (1-9)");
+           }
+        });
+        
+        $("#config.config-bolas").onKeydown(function()
+        {
+           if($.isNaN($(this).valueOf()) && $(this).valueOf() > 0 && $(this).valueOf() > 10)
+           {
+                config.pub_CantidadBolas = $(this).valueOf();
+           }
+           else
+           {
+               alert("Solo valores numéricos (1-9)");
+           }
+        });
+    }
 
     //Devolución de métodos públicos
     return{
@@ -281,6 +348,8 @@ var masterui = (function () {
         pub_cambioColorBola: cambioColorBola,
         pub_jugarPartida: jugarPartida,
         pub_filtrarTeclado: filtrarTeclado,
-        pub_crearPanelJuego: crearPanelJuego
+        pub_crearPanelJuego: crearPanelJuego,
+        pub_modoDebug: modoDebug,
+        pub_debugConfig: debufConfig
     }
 }());

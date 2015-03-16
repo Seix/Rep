@@ -102,3 +102,8 @@ table{
     padding-left: 0px;
     padding-right: 0px;
 }
+
+.herramientras{
+    position: absolute;
+    float: bottom;
+}

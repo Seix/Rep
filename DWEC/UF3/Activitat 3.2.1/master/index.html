@@ -26,15 +26,13 @@
                 <!-- Título página -->
                 <div class="col-lg-8 col-md-8 col-sm-8">
                     <div class="page-header">
-                        <h1>
-                            Mastermind
-                        </h1>
+                        <h1 id="titulo" title="Haz doble click para alternar entre modo debug y normal">Mastermind</h1>
                     </div>
                 </div>
                 <!-- Control dificultad -->
                 <div class="col-lg-4 col-md-4 col-sm-4">
                     <p>
-                        <label for="dificultad">Número de intentos: </label>
+                        <label for="dificultad">Número de intentos máximo: </label>
                         <input id="dificultad" class="slider-input" type="text" readonly>
                     </p>
                     <div id="slider"></div>
@@ -65,7 +63,10 @@
             <!-- Jugada anterior --> 
             <div id="jugadas"></div>
             <!-- Fin jugada anterior -->
-
+            
+            <!-- Herramientas debug --> 
+            <div id="herramientas" class="herramientas"></div>
+            <!-- Fin herramientas debug -->
         </div>
         <script>
             events.pub_empezar();

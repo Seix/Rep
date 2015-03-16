@@ -2,7 +2,7 @@ var config = (function (){
     
     var dif = 10;
     var repCol = true;
-    var debug = true;
+    var debug = false;
     var bolas = 4;
     var fila = ["I", "VI", "IV", "I"];
 

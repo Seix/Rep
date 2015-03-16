@@ -1,10 +1,5 @@
 var master = (function ()
 {
- /*
- * Comprobar contador OK KO, no funciona si bolas != 5 y hay problemas con
- * repetición de bolas
- */
-
     var filaAleatoria = [];
     var filaUsuario = [];
     var filaAleatoriaExtra = [];
@@ -120,7 +115,8 @@ var master = (function ()
 
         return resultado;
     }
-
+    
+    //Función que compara el número de aciertos con la cantidad de bolas del juego
     function isAcertado()
     {
         var result = false;
@@ -131,7 +127,8 @@ var master = (function ()
         }
         return result;
     }
-
+    
+    //Función que setea la fila introducida por el usuario
     function setFilaUsuario(fila)
     {
         filaUsuario = fila;
