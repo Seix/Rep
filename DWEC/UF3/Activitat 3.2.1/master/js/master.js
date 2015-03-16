@@ -1,24 +1,23 @@
 var master = (function ()
 {
-    /*
-     * Comprobar contador OK KO, no funciona si bolas != 5 y hay problemas con
-     * repetición de bolas
-     */
-    
+ /*
+ * Comprobar contador OK KO, no funciona si bolas != 5 y hay problemas con
+ * repetición de bolas
+ */
+
     var filaAleatoria = [];
     var filaUsuario = [];
-    var bolasOk = [];
-    //var filaAleatoriaExtra = [];
-    //var filaUsuarioExtra = [];
+    var filaAleatoriaExtra = [];
+    var filaUsuarioExtra = [];
     var aciertos;
 
     //Función para generar una fila aleatoria
-    function generarFilaAleatoria()
+    function generarFilaBolas()
     {
         //Llenamos el array aleatorio
         if (config.pub_debug)
         {
-            filaAleatoria.push("I", "VI", "IV", "I", "no");
+            filaAleatoria = config.pub_fila;
             console.log("Fila aleatoria: " + filaAleatoria);
         }
         else
@@ -29,7 +28,7 @@ var master = (function ()
 
                 //Generamos un número aleatorio y lo convertimos a número romano
                 //para hacerlo coincidir con la clase que necesitaremos
-                var ran = Math.floor(Math.random() * 6);
+                var ran = Math.floor(Math.random() * 6) +1;
                 var clase = utils.pub_numToRoman(ran);
 
                 //Comprobamos en el fichero de configuración si puede o no
@@ -55,20 +54,13 @@ var master = (function ()
     function cuantasBolasOk()
     {
         var count = 0;
-        for (var i = 0; i < config.pub_cantidadBolas; i++)
+        for (var i = filaUsuarioExtra.length -1; i >= 0 ; i--)
         {
-            var j = 0;
-            var encontrada = false;
-
-            while (j < config.pub_cantidadBolas && !encontrada)
+            if (filaUsuarioExtra[i] === filaAleatoriaExtra[i])
             {
-                if (filaUsuario[i] === filaAleatoria[j] && i === j)
-                {
-                    encontrada = true;
-                    bolasOk.push(filaUsuario[i]);
-                    count++;
-                }
-                j++;
+                filaAleatoriaExtra.splice(i, 1);
+                filaUsuarioExtra.splice(i, 1);
+                count++;
             }
         }
 
@@ -79,18 +71,20 @@ var master = (function ()
     function cuantasBolasKo()
     {
         var count = 0;
-        for (var i = 0; i < config.pub_cantidadBolas; i++)
+        for (var i = filaUsuarioExtra.length -1; i >= 0 ; i--)
         {
-            var j = 0;
+            var j =  filaAleatoriaExtra.length -1;
             var encontrado = false;
-            while (j < config.pub_cantidadBolas && !encontrado)
+            while (j >= 0 && !encontrado)
             {
-                if (filaUsuario[i] === filaAleatoria[j] && /*$.inArray(filaAleatoria[i], bolasOk)*/ filaUsuario[i] != filaAleatoria[i])
+                if (filaUsuarioExtra[i] === filaAleatoriaExtra[j])
                 {
                     count++;
                     encontrado = true;
+                    filaUsuarioExtra.splice(i, 1);
+                    filaAleatoriaExtra.splice(j, 1);
                 }
-                j++;
+                j--;
             }
         }
         return count;
@@ -101,6 +95,8 @@ var master = (function ()
     function comprobarBolas()
     {
         var resultado = [];
+        filaAleatoriaExtra = [].concat(filaAleatoria);
+        filaUsuarioExtra = [].concat(filaUsuario);
 
         var bolaOk = cuantasBolasOk();
         var bolaKo = cuantasBolasKo();
@@ -117,25 +113,25 @@ var master = (function ()
             resultado.push("ko");
         }
 
-        while (resultado.length <= 5)
+        while (resultado.length <= config.pub_cantidadBolas)
         {
             resultado.push("no");
         }
 
         return resultado;
     }
-    
+
     function isAcertado()
     {
         var result = false;
 
-        if (aciertos === 5)
+        if (aciertos === config.pub_cantidadBolas)
         {
             result = true;
         }
         return result;
     }
-    
+
     function setFilaUsuario(fila)
     {
         filaUsuario = fila;
@@ -143,7 +139,7 @@ var master = (function ()
 
     return{
         pub_comprobarBolas: comprobarBolas,
-        pub_generarFilaAleatoria: generarFilaAleatoria,
+        pub_generarFilaBolas: generarFilaBolas,
         pub_setFilaUsuario: setFilaUsuario,
         pub_isAcertado: isAcertado
     }

@@ -1,46 +1,67 @@
 var utils = (function ()
 {
+    
+    //Función para convertir un array de enteros introducida a numeros romanos
+    function convertToRoman(texto)
+    {
+        var filaCon = [];
+        for (var i = 0; i < texto.length; i++)
+        {
+            filaCon.push(numToRoman(texto[i]));
+        }
+        return filaCon;
+    }
+    
     //Función que recibe un entero y lo muetra como número romano (0-9) = (I-X)
     function numToRoman(num)
     {
         var val;
-        switch (num)
+        if(num == 0 || num == "0")
         {
-            case 0:
-                val = "I";
-                break;
-            case 1:
-                val = "II";
-                break;
-            case 2:
-                val = "III";
-                break;
-            case 3:
-                val = "IV";
-                break;
-            case 4:
-                val = "V";
-                break;
-            case 5:
-                val = "VI";
-                break;
-            case 6:
-                val = "VII";
-                break;
-            case 7:
-                val = "VIII";
-                break;
-            case 8:
-                val = "IX";
-                break;
-            case 9:
-                val = "X";
-                break;
+            val = "no";
         }
+        else if(num == 1 || num == "1")
+        {
+            val = "I";
+        }
+        else if(num == 2 || num == "2")
+        {
+            val = "II";
+        }
+        else if(num == 3 || num == "3")
+        {
+            val = "III";
+        }
+        else if(num == 4 || num == "4")
+        {
+            val = "IV";
+        }
+        else if(num == 5 || num == "5")
+        {
+            val = "V";
+        }
+        else if(num == 6 || num == "6")
+        {
+            val = "VI";
+        }
+        else if(num == 7 || num == "7")
+        {
+            val = "VII";
+        }
+        else if(num == 8 || num == "8")
+        {
+            val = "VIII";
+        }
+        else if(num == 9 || num == "9")
+        {
+            val = "IX";
+        }
+   
         return val;
     }
 
     return{
+        pub_convertToRoman: convertToRoman,
         pub_numToRoman: numToRoman
     }
 }());

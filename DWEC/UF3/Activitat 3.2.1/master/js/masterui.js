@@ -1,15 +1,15 @@
 var masterui = (function () {
-    
+
     /*
      * Hacer funcionar el filtro de entrada de la caja de texto
      * (Llamada a la función comentada)
      */
-    
+
     var inicio = true;
     var resultados = [];
     var numIntento;
 
-    //Función de control de dificultad en slider
+    //Función de control de dificultad en slider, determina el número de intentos
     function slider() {
 
         $("#slider").slider({
@@ -25,7 +25,7 @@ var masterui = (function () {
         $("#dificultad").val($("#slider").slider("value"));
     }
 
-    //Función para cambio de color de bola
+    //Función para cambio de color de bola con el selector de color
     function cambioColorBola() {
         $(".selector").click(function () {
             var parent = $(this).attr("parent");
@@ -37,67 +37,73 @@ var masterui = (function () {
 
     //Función para iniciar/continuar con el juego
     function jugarPartida() {
-        $("#btn-juego").click(function () {
-            if (inicio)
-            {
-                inicializarJuego();
-                master.pub_generarFilaAleatoria();
-                inicio = false;
-            }
-
-            getFilaUsuariohtml();
-            resultados = master.pub_comprobarBolas();
-            numIntento++;
-            generarFila();
-
-            if (acabado() || master.pub_isAcertado())
-            {
-                if (master.pub_isAcertado())
-                {
-                    alert("¡¡Has ganado!!");
-                }
-                else
-                {
-                    alert("Has perdido");
-                }
-
-                reiniciarJuego();
-            }
-            estadoBoton();
+        $("#btn-juego").click(function()
+        {
+            partida();
         });
     }
 
-    //Función que genera una fila de una partida jugada por el usuario
+    function partida() {
+        if (inicio)
+        {
+            inicializarJuego();
+            master.pub_generarFilaBolas();
+            inicio = false;
+        }
+
+        getFilaUsuariohtml();
+        resultados = master.pub_comprobarBolas();
+        numIntento++;
+        generarFila();
+
+        if (acabado() || master.pub_isAcertado())
+        {
+            if (master.pub_isAcertado())
+            {
+                alert("¡¡Has ganado!!");
+            }
+            else
+            {
+                alert("Has perdido");
+            }
+
+            reiniciarJuego();
+        }
+        estadoBoton();
+    }
+
+    //Función que genera una fila de una partida jugada por el usuario así como
+    //los resultados de ésta
     function generarFila()
     {
         var fila = "";
-        
+
         fila += "<div class='clearfix fila text-center'>\n\
                     <div class='col-lg-12 col-md-12 col-sm-12 contenido-fila'>";
 
-        for(var i = 0; i < config.pub_cantidadBolas; i++)
-        {   
-                fila+= "<div class='col-xs-1 paddingcero'>\n\
+        for (var i = 0; i < config.pub_cantidadBolas; i++)
+        {
+            fila += "<div class='col-xs-1 paddingcero'>\n\
                             <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n\
-                                <div class='" + getClassBola("bola"+i) + "'></div>\n\
+                                <div class='" + getClassBola("bola" + i) + "'></div>\n\
                             </div>\n\
                         </div>";
         }
 
-                fila += "<div class='col-xs-2'>\n\
+        fila += "<div class='col-xs-2'>\n\
                             <span class='num-intento'>" + getNumIntento() + "</span>\n\
                         </div>";
-        
-        for(var i = 0; i < config.pub_cantidadBolas; i++)
-        {   
-                fila += "<div class='col-xs-1'>\n\
+
+        for (var i = 0; i < config.pub_cantidadBolas; i++)
+        {
+            fila += "<div class='col-xs-1'>\n\
                             <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n\
                                 <div class='" + resultados[i] + " bola'></div>\n\
                             </div>\n\
                         </div>";
         }
-        
-        fila+=      "</div>\n\
+
+        fila += "</div>\n\
                 </div>";
 
         $("#jugadas").prepend(fila);
@@ -115,7 +121,7 @@ var masterui = (function () {
     {
         return document.getElementById("intento").textContent;
     }
-    
+
     //Modifica el número de intento en el panel de juego
     function setNumIntento()
     {
@@ -174,7 +180,7 @@ var masterui = (function () {
         numIntento = 1;
         setNumIntento();
     }
-    
+
     //Inicializa, limpia y setea variables para el inicio del juego
     function inicializarJuego()
     {
@@ -183,7 +189,7 @@ var masterui = (function () {
         numIntento = 1;
         setNumIntento();
     }
-    
+
     //Función que cambia el texto del botón según el estado del juego
     function estadoBoton()
     {
@@ -197,79 +203,49 @@ var masterui = (function () {
         }
 
     }
-    
+
     //Función que filtra los datos introducidos en el campo de texto del panel
     //de juego
     function filtrarTeclado()
     {
-        $("#txtbx-juego").keypress(function(key)
+        $("#txtbx-juego").keydown(function (key)
         {
-            if(key.wich === 13)
+            //console.log(key.keyCode);
+            if (key.keyCode === 13)
             {
-                var texto = document.getElementById("txtbx-juego").textContent;
-                //else if (/^[0-6]+$/.test(cadena))
-                if($.inArray("[a-zA-Z6-9]", texto) !== -1)
+                var texto = document.getElementById("txtbx-juego").value;
+
+                if (/^[0-6]+$/.test(texto))
                 {
-                   convertirCadena(texto); 
+                    var colores = utils.pub_convertToRoman(texto);
+                    colorearBolas(colores);
+                    partida();
                 }
                 else
                 {
-                    alert("Datos introducidos incorrectos");
+                    alert("Solo valores numéricos de 0-6");
                 }
             }
         });
     }
-    
-    //Función para convertir un array de enteros introducida a numeros romanos
-    function convertirCadena(texto)
+
+    function colorearBolas(colores)
     {
-        var filaCon = [];
-        for(var i = 0; i < texto.length; i++)
+        for (var i = 0; i < colores.length; i++)
         {
-            filaCon.push(utils.pub_numToRoman(texto[i]));
-        }
-        return filaCon;
-    }
-    
-    
-    //Ejemplo de alguien
-    function filtrarTeclado()
-    {
-        //Entraremos dentro cuando le demos a Enter
-        if(event.keyCode == 13){
-            var cadena = document.getElementById(event.data.campo).value;        
-            
-            //La primera comprobacion sera si la cadena esta vacia
-            if (cadena == "") {
-                alert('Escribe un número.');
-            }
-            
-            //La segunda comprobacion es si la cadena es menor a 5
-            else if (cadena.length < 5) {
-                alert('No has escrito el número entero.');
-            }
-            
-            //La siguiente comprobacion es una expresion regular que entrara 
-            //si la cadena solo tiene valores del 0-6 si es asi ejecuta otra funcion
-            else if (/^[0-6]+$/.test(cadena)) {
-                cadenacolores(cadena);
-            }
-            
-            //Si no hay alguna cosa correcta salta un alert
-            else {
-                alert('Escribe bien el número.');
-            } 
+            $("#bola" + i).removeClass("no I II III IV V VI");
+            $("#bola" + i).addClass(colores[i]);
         }
     }
-    
+
     //Función que crea el panel de juego necesario para la cantidad de bolas configuradas
     function crearPanelJuego()
     {
         var texto = "";
 
-        for(var i = 0; i < config.pub_cantidadBolas; i++)
+        for (var i = 0; i < config.pub_cantidadBolas; i++)
         {
-            texto+= "<div class='col-xs-1 paddingcero'>\n\
+            texto += "<div class='col-xs-1 paddingcero'>\n\
                         <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>\n\
                             <div id='bola" + i + "' class='no bola'></div>\n\
                             </div>\n\
@@ -285,17 +261,18 @@ var masterui = (function () {
                                 <div class='col-md-4 VI selector' parent=bola" + i + ">6</div>\n\
                             </div>\n\
                         </div>\n\
-                    </div>";    
+                    </div>";
         }
-        
+
         texto += "<div class='col-xs-2'><span id='intento' class='num-intento'>1</span></div>\n\
                     <div class='col-xs-1'></div>\n\
                     <div class='col-xs-1'></div>\n\
                     <div class='col-xs-3'>\n\
                         <button id='btn-juego' class='btn-primary btn-juego'>Empezar a jugar</button>\n\
                     </div>";
-        
+
         $("#filaJugada").append(texto);
+        $("#txtbx-juego").prop("maxlength", config.pub_cantidadBolas);
     }
 
     //Devolución de métodos públicos
@@ -303,7 +280,7 @@ var masterui = (function () {
         pub_slider: slider,
         pub_cambioColorBola: cambioColorBola,
         pub_jugarPartida: jugarPartida,
-        pub_filtrarTeclado : filtrarTeclado,
+        pub_filtrarTeclado: filtrarTeclado,
         pub_crearPanelJuego: crearPanelJuego
     }
 }());
