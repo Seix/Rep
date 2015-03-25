@@ -1,5 +1,5 @@
 var events = (function () {
-//http://www.w3schools.com/html/html5_webstorage.asp
+
     //Empieza todo el funcionamiento del juego
     function empezar() {
         $(document).ready(function () {
@@ -10,6 +10,8 @@ var events = (function () {
             masterui.pub_filtrarTeclado();
             masterui.pub_modoDebug();
             masterui.pub_debugConfig();
+            console.log("Para entrar en modo debug haz doble click en el título de la página.");
+            console.error("Dejan de funcionar los selectores al cambiar el número de bolas desde el modo debug");
         });
     }
     return {

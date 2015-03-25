@@ -3,8 +3,8 @@ var config = (function (){
     var dif = 10;
     var repCol = true;
     var debug = false;
-    var bolas = 4;
-    var fila = ["I", "VI", "IV", "I"];
+    var bolas = 5;
+    var fila = ["I", "VI", "IV", "I", "V"];
 
     return{
         pub_dificultad: dif,

@@ -1,4 +1,4 @@
-var masterui = (function () {
+var masterui = (function() {
 
     var inicio = true;
     var resultados = [];
@@ -12,7 +12,7 @@ var masterui = (function () {
             min: 1,
             max: 10,
             step: 1,
-            slide: function (event, ui) {
+            slide: function(event, ui) {
                 $("#dificultad").val(ui.value);
                 config.pub_dificultad = ui.value;
             }
@@ -22,7 +22,7 @@ var masterui = (function () {
 
     //Función para cambio de color de bola con el selector de color
     function cambioColorBola() {
-        $(".selector").click(function () {
+        $(".selector").click(function() {
             var parent = $(this).attr("parent");
             var val = $(this).attr("class").split(" ")[1];
             $("#" + parent).removeClass("no I II III IV V VI");
@@ -45,13 +45,20 @@ var masterui = (function () {
             inicializarJuego();
             master.pub_generarFilaBolas();
             inicio = false;
+            $("#slider").slider("disable");
         }
         
+        //Obtenemos fila introducida por el usuario
         getFilaUsuariohtml();
+        //Recuperamos los resultados de comprobar la fila del usuario con la 
+        //generada en la partida
         resultados = master.pub_comprobarBolas();
         numIntento++;
+        //Mostramos el resultado de la comparación (pistas)
         generarFila();
 
+        //Vamos comprobando si la partida ha finalizado o no según el límite
+        //de intentos o si ha descubierto el código oculto
         if (acabado() || master.pub_isAcertado())
         {
             if (master.pub_isAcertado())
@@ -62,9 +69,10 @@ var masterui = (function () {
             {
                 alert("Has perdido");
             }
-
+            datosLocales(master.pub_isAcertado());
             reiniciarJuego();
         }
+        //Cambiamos el texto del botón según en el punto en el que se encuentre el usuario
         estadoBoton();
     }
 
@@ -76,7 +84,8 @@ var masterui = (function () {
 
         fila += "<div class='clearfix fila text-center'>\n\
                     <div class='col-lg-12 col-md-12 col-sm-12 contenido-fila'>";
-
+        
+        //Generamos los elementos Bola introducidos por el usuario
         for (var i = 0; i < config.pub_cantidadBolas; i++)
         {
             fila += "<div class='col-xs-1 paddingcero'>\n\
@@ -85,11 +94,13 @@ var masterui = (function () {
                             </div>\n\
                         </div>";
         }
-
+        
+        //Generamos número de intento jugado
         fila += "<div class='col-xs-2'>\n\
                             <span class='num-intento'>" + getNumIntento() + "</span>\n\
                         </div>";
 
+        //Generamos los elementos Bola que dan pista al usuario
         for (var i = 0; i < config.pub_cantidadBolas; i++)
         {
             fila += "<div class='col-xs-1'>\n\
@@ -102,7 +113,9 @@ var masterui = (function () {
         fila += "</div>\n\
                 </div>";
 
+        //Escribimos en el HTML todo el código generado
         $("#jugadas").prepend(fila);
+        //Establecemos el número de intento para el siguiente intento
         setNumIntento();
     }
 
@@ -175,6 +188,7 @@ var masterui = (function () {
         inicio = true;
         numIntento = 1;
         setNumIntento();
+        $("#slider").slider("enable");
     }
 
     //Inicializa, limpia y setea variables para el inicio del juego
@@ -204,7 +218,7 @@ var masterui = (function () {
     //de juego
     function filtrarTeclado()
     {
-        $("#txtbx-juego").keydown(function (key)
+        $("#txtbx-juego").keydown(function(key)
         {
             if (key.keyCode === 13)
             {
@@ -223,7 +237,7 @@ var masterui = (function () {
             }
         });
     }
-    
+
     //Función que cambia el color de las bolas a partir de un array recibido
     //por parámetro
     function colorearBolas(colores)
@@ -239,7 +253,9 @@ var masterui = (function () {
     function crearPanelJuego()
     {
         var texto = "";
+        $("#filaJugada").empty();
 
+        //Generamos conjunto Bola-Selector según la cantidad de Bolas que va a ser jugada cada partida
         for (var i = 0; i < config.pub_cantidadBolas; i++)
         {
             texto += "<div class='col-xs-1 paddingcero'>\n\
@@ -269,16 +285,47 @@ var masterui = (function () {
                     </div>";
 
         $("#filaJugada").append(texto);
+        
+        //Limpiamos campos de juego rápido y fila oculta del modo debug a ""
         $("#txtbx-juego").prop("maxlength", config.pub_cantidadBolas);
+        $("#config-bolas").prop("maxlength", config.pub_cantidadBolas);
     }
     
+    //Usamos LocalStorage para guardar la cantidad de partidas jugadas y el
+    //resultado de la última
+    function datosLocales(acertado)
+    {
+        var contador = localStorage.getItem("Contador");
+
+        if (contador === 'undefined')
+        {
+            contador = 0;
+            localStorage.setItem("Contador", contador);
+        }
+        else
+        {
+            contador++;
+            localStorage.setItem("Contador", contador);
+        }
+
+        if (acertado)
+        {
+            localStorage.setItem("Partida", contador + " Ganada");
+        }
+        else
+        {
+            localStorage.setItem("Partida", contador + " Perdida");
+        }
+    }
+
+
     //Función que activa/desactiva modo debug cuando el usuario hace doble click
     //en el título de la página
     function modoDebug()
     {
         $("#titulo").on("dblclick", (function()
         {
-            if(config.pub_debug == false)
+            if (config.pub_debug == false)
             {
                 config.pub_debug = true;
                 alert("Activado modo debug");
@@ -293,52 +340,73 @@ var masterui = (function () {
             herramientas();
         }));
     }
-    
+
     //Función que muestra o no las herramientas del modo debug
     function herramientas()
     {
-        if(config.pub_debug)
+        if (config.pub_debug)
         {
-            var texto = "<div class='col-md-6 form-group'>\n\
-                            <label class='control-label'>Cantidad bolas: </label>\n\
-                            <input id='config-num-bolas' class='form-control' type='text'>\n\
-                            <label class='control-label'>Fila oculta: </label>\n\
-                            <input id='config-bolas' class='form-control' type='text' value='1641'>\n\
-                            </div>";
-            $("#herramientas").append(texto);
+            $("#herramientas").show();
         }
         else
         {
-            $("#herramientas").empty();
+            $("#herramientas").hide();
         }
     }
-    
+
     //Pendiente de probar: Función que captura los eventos/valores introducidos en las
     //herramientas de debug
     function debugConfig()
     {
-        $("#config.num-bolas").onKeydown(function()
+        //Cambiamos configuración de cantidad de bolas de la partida
+        $("#config-num-bolas").keydown(function(key)
         {
-           if($.isNaN($(this).valueOf()) && $(this).valueOf() > 0 && $(this).valueOf() > 10)
-           {
-                config.pub_CantidadBolas = $(this).valueOf();
-           }
-           else
-           {
-               alert("Solo valores numéricos (1-9)");
-           }
+            //Si el código de tecla es el de "Enter"...
+            if (key.keyCode === 13)
+            {
+                var val = document.getElementById("config-num-bolas").value;
+                //Filtramos valores
+                if (/[2-8]/.test(val))
+                {
+                    config.pub_cantidadBolas = val;
+                    crearPanelJuego();
+                    
+                    $("#txtbx-juego").prop("value", "");
+                    $("#config-bolas").prop("value", "");
+                    pub_cambioColorBola();
+                }
+                else
+                {
+                    alert("Solo valores numéricos (2-8)");
+                }
+            }
+        });
+
+        //Cambiamos configuración de la fila oculta introducida manualmente en
+        //modo debug
+        $("#config-bolas").keydown(function(key)
+        {
+            if (key.keyCode === 13)
+            {
+                var texto = document.getElementById("config-bolas").value;
+
+                if (/^[0-6]+$/.test(texto))
+                {
+                    var colores = utils.pub_convertToRoman(texto);
+                    config.pub_fila = colores;
+                }
+                else
+                {
+                    alert("Solo valores numéricos de 0-6");
+                }
+            }
         });
         
-        $("#config.config-bolas").onKeydown(function()
+        //Cambiamos configuración para permitir o no repetición de colores en la
+        //fila oculta
+        $("#config-rep-bolas").change(function()
         {
-           if($.isNaN($(this).valueOf()) && $(this).valueOf() > 0 && $(this).valueOf() > 10)
-           {
-                config.pub_CantidadBolas = $(this).valueOf();
-           }
-           else
-           {
-               alert("Solo valores numéricos (1-9)");
-           }
+            pub_repetirColores = $(this).prop('checked');
         });
     }
 
@@ -350,6 +418,6 @@ var masterui = (function () {
         pub_filtrarTeclado: filtrarTeclado,
         pub_crearPanelJuego: crearPanelJuego,
         pub_modoDebug: modoDebug,
-        pub_debugConfig: debufConfig
+        pub_debugConfig: debugConfig
     }
 }());

@@ -41,6 +41,7 @@ var master = (function ()
                 }
             }
             console.log("Fila aleatoria: " + filaAleatoria);
+            config.pub_fila = filaAleatoria;
         }
     }
 

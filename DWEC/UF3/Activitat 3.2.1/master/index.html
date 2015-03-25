@@ -10,7 +10,7 @@
         <!-- Scripts -->
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/config.js"></script>
-        
+
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
@@ -63,9 +63,17 @@
             <!-- Jugada anterior --> 
             <div id="jugadas"></div>
             <!-- Fin jugada anterior -->
-            
+
             <!-- Herramientas debug --> 
-            <div id="herramientas" class="herramientas"></div>
+            <div id="herramientas" class="herramientas" hidden="">
+                <div class='col-md-3 form-group'>
+                    <label class='control-label'>Set cantidad bolas: </label>
+                    <input id='config-num-bolas' class='form-control' type='text' maxlength='1' value='5'>
+                    <label class='control-label'>Set fila oculta: </label>
+                    <input id='config-bolas' class='form-control' type='text' value='16415'>
+                    <input id='config-rep-bolas' type='checkbox'> Permitir repetición de colores
+                </div>
+            </div>
             <!-- Fin herramientas debug -->
         </div>
         <script>
