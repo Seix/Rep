@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>Activitat 2.2 - Els petits canvis son poderosos</title>
+        <!-- Estilos -->
+        <link href="style/bootstrap.min.css" rel="stylesheet">
+        <link href="style/bootstrap-slider.css" rel="stylesheet">
+        <link href="style/canvis.css" rel="stylesheet">
+        <link href="style/jquery-ui.css" rel="stylesheet">
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/config.js"></script>
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+
+        <script type="text/javascript" src="js/segregation.js"></script>
+        <script type="text/javascript" src="js/segregationui.js"></script>
+        <script type="text/javascript" src="js/events.js"></script>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="clearfix">
+                <!-- Título página -->
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="page-header">
+                        <h2 id="titulo">Els petits canvis son poderosos</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <br/>
+            </div>
+            <!-- Tablero -->
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <div id="tableroJuegoSegregation" class="clearfix">
+
+                </div>
+            </div>
+            <!-- Fin tablero -->
+            <div class="col-lg-3 col-lg-offset-1 col-md-3 col-md-offset-1 col-sm-4">
+                <!-- -->
+                <div>
+                    <p>
+                        <label for="cantidadBolasAzules">Azules: </label>
+                        <input id="cantidadBolasAzules" class="slider-input" type="text" readonly>
+                    </p>
+                    <div id="sliderBolasAzules"></div>
+                </div>
+                <div>
+                    <p>
+                        <label for="cantidadBolasVerdes">Verdes: </label>
+                        <input id="cantidadBolasVerdes" class="slider-input" type="text" readonly>
+                    </p>
+                    <div id="sliderBolasVerdes"></div>
+                </div>
+                <div>
+                    <p>
+                        <label for="cantidadBolasVerdesQuierenVerdes">Verdes con verdes: </label>
+                        <input id="cantidadBolasVerdesQuierenVerdes" class="slider-input" type="text" readonly>
+                    </p>
+                    <div id="sliderBolasVerdesQuierenVerdes"></div>
+                </div>
+                <div>
+                    <p>
+                        <label for="cantidadBolasVerdesQuierenAzules">Verdes con azules: </label>
+                        <input id="cantidadBolasVerdesQuierenAzules" class="slider-input" type="text" readonly>
+                    </p>
+                    <div id="sliderBolasVerdesQuierenAzules"></div>
+                </div>
+                <div>
+                    <p>
+                        <label for="cantidadBolasAzulesQuierenVerdes">Azules con verdes: </label>
+                        <input id="cantidadBolasAzulesQuierenVerdes" class="slider-input" type="text" readonly>
+                    </p>
+                    <div id="sliderBolasAzulesQuierenVerdes"></div>
+                </div>
+                <div>
+                    <p>
+                        <label for="cantidadBolasAzulesQuierenAzules">Azules con azules: </label>
+                        <input id="cantidadBolasAzulesQuierenAzules" class="slider-input" type="text" readonly>
+                    </p>
+                    <div id="sliderBolasAzulesQuierenAzules"></div>
+                </div>
+                <!-- -->
+            </div>
+        </div>
+        <script>
+            events.pub_empezar();
+        </script>
+    </body>
+</html>
