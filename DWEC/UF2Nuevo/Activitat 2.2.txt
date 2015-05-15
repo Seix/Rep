@@ -1,0 +1,27 @@
+Clases: tablero, casilla, bola, 
+
+class bola
+- color: int
+- estado: boolean 
+
+class casilla
+- bola: bola
+- fila: int
+- columna: int
+
+
+class tablero
+- ancho: int
+- alto: int
+- listaCasillas: List<casilla>
+
+
+//Métodos
+
+class bola
++comprobarEstado()
+
+class tablero
++contiguasIguales(casilla)
++contiguasDiferentes(casilla)
+
