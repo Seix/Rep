@@ -3,10 +3,13 @@ var segregation = (function () {
     var tableroJuego = null;
     var casillaJugada = null;
 
+    //Clase Bola
     function Bola(color) {
         this.color = color;
         this.estado = "sad";
-
+        
+        //Extenso sistema de comprobación de cualquier posición dentro de un tablero
+        //con los elementos de su alrededor.
         this.comprobarEstado = function (x, y, tab) {
             var verdesCount = 0;
             var azulesCount = 0;
@@ -444,7 +447,8 @@ var segregation = (function () {
             }
             //console.log("Bola (" + x + ", " + y + ") = " + this.estado + "(" + tab.matriz[x][y].bolaCasilla.color + ")");
         }
-    
+        
+        //Posición Norte respecto a la posición recibida
         function comprobarN(tabl, x, y)
         {
             var color = "";
@@ -458,6 +462,7 @@ var segregation = (function () {
             }
             return color;
         }
+        //Posición Sur respecto a la posición recibida
         function comprobarS(tabl, x, y)
         {
             var color = "";
@@ -471,6 +476,7 @@ var segregation = (function () {
             }
             return color;
         }
+        //Posición Este respecto a la posición recibida
         function comprobarE(tabl, x, y)
         {
             var color = "";
@@ -484,6 +490,7 @@ var segregation = (function () {
             }
             return color;
         }
+        //Posición Oeste respecto a la posición recibida
         function comprobarW(tabl, x, y)
         {
             var color = "";
@@ -497,6 +504,7 @@ var segregation = (function () {
             }
             return color;
         }
+        //Posición Nordeste respecto a la posición recibida
         function comprobarNE(tabl, x, y)
         {
             var color = "";
@@ -510,6 +518,7 @@ var segregation = (function () {
             }
             return color;
         }
+        //Posición Suresye respecto a la posición recibida
         function comprobarSE(tabl, x, y)
         {
             var color = "";
@@ -523,6 +532,7 @@ var segregation = (function () {
             }
             return color;
         }
+        //Posición Suroeste respecto a la posición recibida
         function comprobarSW(tabl, x, y)
         {
             var color = "";
@@ -536,6 +546,7 @@ var segregation = (function () {
             }
             return color;
         }
+        //Posición Noroeste respecto a la posición recibida
         function comprobarNW(tabl, x, y)
         {
             var color = "";
@@ -552,12 +563,14 @@ var segregation = (function () {
     
     }
 
+    //Clase Casilla
     function Casilla(posX, posY) {
         this.posX = posX;
         this.posY = posY;
         this.bolaCasilla = null;
     }
 
+    //Clase Tablero
     function Tablero() {
         this.matriz = new Array(config.pub_ancho);
         for (var i = 0; i < config.pub_ancho; i++) {
@@ -566,12 +579,9 @@ var segregation = (function () {
                 this.matriz[i][j] = new Casilla(i, j);
             }
         }
-
-        this.getCasilla = function (x, y) {
-            return this.matriz[x][y];
-        }
     }
-
+    
+    //Constructor de la clase Segregation (este espacio de nombres)
     function Segregation()
     {
         tableroJuego = new Tablero();
@@ -581,6 +591,8 @@ var segregation = (function () {
         segregationui.pub_mostrarEnTablero(tableroJuego);
     }
     
+    //Función para reconfigurar el contenido del tablero de juego según los 
+    //cambios efectuados por el usuario
     function regenerarContenidoTablero()
     {
         eliminarBolasTablero();
@@ -590,12 +602,14 @@ var segregation = (function () {
         segregationui.pub_actualizarBolasTablero(tableroJuego);
     }
     
+    //Función para guardarse una bola
     function seleccionBola(posX, posY)
     {
         //console.log("Selecciono bola: casilla (" + posX + ", " + posY + ")");
         casillaJugada = tableroJuego.matriz[posX][posY];
     }
-
+    
+    //Función para cambiar de posición en el tablero una bola guardada
     function moverACasilla(newX, newY)
     {
         if(casillaJugada !== null)
@@ -605,7 +619,8 @@ var segregation = (function () {
             tableroJuego.matriz[casillaJugada.posX][casillaJugada.posY].bolaCasilla = null;
         }
     }
-
+    
+    //Función que genera y coloca aleatóriamente una cantidad de bolas Azules
     function generarAzules() {
         var bolas = 0;
         while (bolas < config.pub_totalAzules) {
@@ -619,6 +634,7 @@ var segregation = (function () {
         }
     }
 
+    //Función que genera y coloca aleatóriamente una cantidad de bolas Verdes
     function generarVerdes() {
         var bolas = 0;
         while (bolas < config.pub_totalVerdes) {
@@ -632,6 +648,7 @@ var segregation = (function () {
         }
     }
     
+    //Función que elimina las bolas del objeto tablero
     function eliminarBolasTablero(){
         for(var i = 0; i < config.pub_ancho; i++)
         {
@@ -642,7 +659,7 @@ var segregation = (function () {
         }
     }
     
-
+    //Función que hace la comprobación de todas las bolas del objeto tablero
     function comprobarBolas() {
         for (var i = 0; i < config.pub_ancho; i++) {
             for (var j = 0; j < config.pub_alto; j++) {

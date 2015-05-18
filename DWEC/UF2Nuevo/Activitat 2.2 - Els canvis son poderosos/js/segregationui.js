@@ -5,19 +5,25 @@ var segregationui = (function () {
     //Función que genera el tablero desde cero
     function mostrarEnTablero(tableroJuego)
     {
+        //Limpiamos en contenido dentro del div #tableroJuegoSegregation
         $("#tableroJuegoSegregation").empty();
         var texto = "";
-
+        
         texto += "<table id='tableroJuego' class='text-center' style='width: 310px;'>";
         var i = 0;
         var j = 0;
+        
+        //Empezamos a crear el tablero según el alto y ancho establecidos
         for (j = 0; j < config.pub_alto; j++)
         {
+            //Nueva fila
             texto += "<tr fila='" + j + "'>";
             for (i = 0; i < config.pub_ancho; i++)
             {
+                //Nueva columna, lo que correspondrería a una celda: nueva casilla
                 texto += "<td class='casilla' columna='" + i + "'>";
-
+                
+                //Si en el objeto tablero hay bola, la representamos
                 if (tableroJuego.matriz[i][j].bolaCasilla !== null)
                 {
                     texto += "<div class='bola " + tableroJuego.matriz[i][j].bolaCasilla.color + " " +
@@ -27,29 +33,35 @@ var segregationui = (function () {
             texto += "</tr>";
         }
         texto += "</table>";
+        
+        //Finalmente escribimos el código resultante en el HTML.
         $("#tableroJuegoSegregation").append(texto);
     }
     
     //Función que actualiza las posiciones de las bolas en el tablero
     function actualizarBolasTablero(tableroJuego)
     {
-        $("#tableroJuegoSegregation");
-
-        //texto += "<table id='tableroJuego' class='text-center' style='width: 310px;'>";
         var i = 0;
         var j = 0;
         var tabla = $("#tableroJuego");
         
+        //Recorremos las casillas de la tabla en el HTML y del objeto tablero
         for (j = 0; j < config.pub_alto; j++)
         {
+            //Nos plantamos en la fila
             var fila = $(tabla).find("tr")[j];
-            //texto += "<tr fila='" + j + "'>";
+
             for (i = 0; i < config.pub_ancho; i++)
             {
+                //Nos plantamos en la columna: casilla
                 var casilla = $(fila).find(".casilla")[i];
-                //texto += "<td class='casilla' columna='" + i + "'>";
+                
+                //Eliminamos el contenido anterior al de la casilla. Llegados
+                //a este punto, no sabemos si ha cambiado el contenido o no, pero
+                //este caso servirá para ambos casos
                 $(casilla).empty();
                 
+                //Representamos la bola si es que esta existe en el objeto tablero
                 if (tableroJuego.matriz[i][j].bolaCasilla !== null)
                 {
                     var texto = "<div class='bola " + tableroJuego.matriz[i][j].bolaCasilla.color + " " +
@@ -64,7 +76,9 @@ var segregationui = (function () {
     //mover a un espacio la última bola seleccionada préviamente
     function seleccionarCasilla(){
         $(".casilla").click(function() {
-            console.log("Evento llamado");
+            
+            //Segundo caso, segundo click: cambiamos la bola de sitio,
+            //volvemos a comprobar el estado de las bolas del tablero
             if ($(this).find(".bola").length === 0 && clickCounter === 1)
             {
                 console.log("Mover bola");
@@ -76,6 +90,8 @@ var segregationui = (function () {
                 //Empieza a dejar de funcionar evento
                 segregation.pub_comprobarBolas();
             }
+            //Primer paso, primer click: simplemente nos guardamos la bola que
+            //deseamos mover
             else
             {
                 console.log("Seleccionar bola");
@@ -86,6 +102,11 @@ var segregationui = (function () {
             }
         });
     }
+
+    /*
+     *  Todos los controles Slider reiniciarán el juego para evitar conflictos
+     *  entre los datos representados y los existentes
+     */
 
     //Función para controlar la cantidad de bolas azules en el tablero
     function sliderBolasAzules() {
@@ -104,6 +125,7 @@ var segregationui = (function () {
         $("#cantidadBolasAzules").val($("#sliderBolasAzules").slider("value"));
     }
     
+    //Función para controlar la cantidad de bolas verdes en el tablero
     function sliderBolasVerdes() {
 
         $("#sliderBolasVerdes").slider({
@@ -120,6 +142,8 @@ var segregationui = (function () {
         $("#cantidadBolasVerdes").val($("#sliderBolasVerdes").slider("value"));
     }
     
+    //Función para indicar con cuantas bolas verdes desea estar en contacto una
+    //bola verde
     function sliderBolasVerdesQuierenVerdes() {
 
         $("#sliderBolasVerdesQuierenVerdes").slider({
@@ -136,6 +160,8 @@ var segregationui = (function () {
         $("#cantidadBolasVerdesQuierenVerdes").val($("#sliderBolasVerdesQuierenVerdes").slider("value"));
     }
     
+    //Función para indicar con cuantas bolas azules desea estar en contacto una
+    //bola verde
     function sliderBolasVerdesQuierenAzules() {
 
         $("#sliderBolasVerdesQuierenAzules").slider({
@@ -152,6 +178,8 @@ var segregationui = (function () {
         $("#cantidadBolasVerdesQuierenAzules").val($("#sliderBolasVerdesQuierenAzules").slider("value"));
     }
     
+    //Función para indicar con cuantas bolas azules desea estar en contacto una
+    //bola azul
     function sliderBolasAzulesQuierenAzules() {
 
         $("#sliderBolasAzulesQuierenAzules").slider({
@@ -168,6 +196,8 @@ var segregationui = (function () {
         $("#cantidadBolasAzulesQuierenAzules").val($("#sliderBolasAzulesQuierenAzules").slider("value"));
     }
     
+    //Función para indicar con cuantas bolas verdes desea estar en contacto una
+    //bola azul
     function sliderBolasAzulesQuierenVerdes() {
 
         $("#sliderBolasAzulesQuierenVerdes").slider({
