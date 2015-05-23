@@ -1,0 +1,25 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-may-2015, 10:36:12
+    Author     : cep
+*/
+
+.author {
+    color: #383838;
+}
+
+body{
+    background-color: #eaeaea;
+}
+
+.img-results{
+    background-color: #e1e5f8;
+    border: 1px solid #cfcfcf;
+    border-radius: 5px;
+    padding-top: 20pt;
+    padding-bottom: 50pt;
+}

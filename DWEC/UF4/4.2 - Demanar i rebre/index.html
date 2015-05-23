@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Server Attack!</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="css/full-width-pics.css" rel="stylesheet">
+        <link href="css/attack.css" rel="stylesheet" type="text/css"/>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="main-nav navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" style="color: white; font-weight: bolder;" href="#">
+                        4.2. Dar y recibir
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse text-center" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#"></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <!-- Full Width Image Header with Logo -->
+        <!-- Content Section -->
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="form-horizontal">
+                        <div id="controls" class="col-xs-12 col-sm-10 col-md-10 col-lg-10 col-lg-offset-1">
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-2 col-md-2">
+                                    <label class="control-label">ID Usuario:</label>
+                                </div>
+                                <div class="col-xs-10 col-sm-6 col-md-6">
+                                    <input id="inputIdSearch" type="text" class="form-control" placeholder="ID Usuario" value="122494044@N07"/>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <!--<button id="btnSearch" class="btn btn-primary">Buscar</button>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-2 col-md-2">
+                                    <label class="control-label">Tags:</label>
+                                </div>
+                                <div class="col-xs-10 col-sm-6 col-md-6">
+                                    <input id="inputTagsSearch" type="text" class="form-control" />
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <button id="btnSearch" class="btn btn-primary">Buscar</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <label id="labelInfo" class="alert-info"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><br/><br/></div>
+                <div class="row">
+                    <div id="images">
+
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+        </section>
+
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function ()
+            {
+                $("#btnSearch").click(function ()
+                {
+                    $("#images").empty();
+                    $("#labelInfo").text("");
+                    $("#btnSearch").html("Cargando...");
+                    var authorId = $("#inputIdSearch").val();
+                    var tags = $("#inputTagsSearch").val();
+
+                    if(tags === "")
+                    {
+                        $.ajax({
+                            url: "https://api.flickr.com/services/feeds/photos_public.gne?format=json&id=" + authorId + "&jsoncallback=?",
+                            dataType: "json",
+                            complete: function (jqXHR, textStatus) {
+                                console.log("Completed: " + textStatus);
+                                $("#btnSearch").html("Volver a buscar");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("Error: " + jqXHR.status + " " + errorThrown);
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                var j = 0;
+                                var text = "";
+                                
+                                if(data.items.length > 0)
+                                {
+                                    $("#images").attr("class", "img-results col-lg-12 text-center");
+                                }
+                                else
+                                {
+                                    $("#images").removeAttr("class");
+                                    $("#labelInfo").text("No se han encontrado resultados");
+                                }
+                                
+                                text += "<div class='row'>";
+                                $.each(data.items, function (i, item) {
+                                    console.log(i);
+                                    text += "<div class='col-md-4'>";
+                                    text += "<p class='author' author_id='" + item.author_id + "'>" + item.title + "</p>";
+                                    text += "<img src='" + item.media.m + "'></img>";
+                                    text += "</div>";
+                                    j++;
+                                    if (j === 3) {
+                                        text += "</div>";
+                                        text += "<div><br/><br/></div>";
+                                        text += "<div class='row'>";
+                                        j = 0;
+                                    }
+                                });
+                                $("#images").append(text);
+                                //$("#images").attr("class", "img-results col-lg-12 text-center");
+                            },
+                        });
+                    }
+                    else
+                    {
+                        $.ajax({
+                            url: "https://api.flickr.com/services/feeds/photos_public.gne?format=json&id=" + authorId + "&tags=" + tags + "&jsoncallback=?",
+                            dataType: "json",
+                            complete: function (jqXHR, textStatus) {
+                                console.log("Completed: " + textStatus);
+                                $("#btnSearch").html("Nueva búsqueda");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.log("Error: " + jqXHR.status + " " + errorThrown);
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                var j = 0;
+                                var text = "";
+                                
+                                if(data.items.length > 0)
+                                {
+                                    $("#images").attr("class", "img-results col-lg-12 text-center");
+                                }
+                                else
+                                {
+                                    $("#images").removeAttr("class");
+                                    $("#labelInfo").text("No se han encontrado resultados");
+                                }
+        
+                                text += "<div class='row'>";
+                                
+                                $.each(data.items, function (i, item) {
+                                    console.log(i);
+                                    text += "<div class='col-md-4'>";
+                                    text += "<p class='author' author_id='" + item.author_id + "'>" + item.title + "</p>";
+                                    text += "<img src='" + item.media.m + "'></img>";
+                                    text += "</div>";
+                                    j++;
+                                    if (j === 3) {
+                                        text += "</div>";
+                                        text += "<div><br/><br/></div>";
+                                        text += "<div class='row'>";
+                                        j = 0;
+                                    }
+                                });
+                                $("#images").append(text);
+                                //$("#images").attr("class", "img-results col-lg-12 text-center");
+                            },
+                        });
+                    }
+                });
+            });
+
+        </script>
+    </body>
+
+</html>
