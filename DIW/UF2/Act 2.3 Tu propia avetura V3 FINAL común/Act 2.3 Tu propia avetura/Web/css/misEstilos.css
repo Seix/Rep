@@ -1,0 +1,8 @@
+body {
+    background-color: gainsboro;
+    text-align: center;
+}
+
+#miModal,#respostesFinalUsuari{
+    text-align: left;
+}

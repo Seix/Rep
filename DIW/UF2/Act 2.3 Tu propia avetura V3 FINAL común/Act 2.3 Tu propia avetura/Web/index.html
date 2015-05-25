@@ -1,0 +1,248 @@
+<!DOCTYPE html> 
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="Activitat 2.3" content="Creatu propia aventura">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tu propia aventura">
+        <meta name="author" content="Sergio Ruiz">
+        <title>Controla a tu familia</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/misEstilos.css">
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                    <h3 class="text-primary">
+                        <label>Controla a tu familia</label>
+                    </h3>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 column">
+                    <video id="video" width="800" controls>
+                        <source src="video/Secuencia 01.mp4" type="video/mp4">
+                        Your browser dowsn't support video tag.
+                    </video>
+                    <label>Cada respuesta afecta en la historia. Toma tus propias decisiones.</label>
+                </div>
+            </div>
+            <div id="miModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pregunta" aria-hidden="true" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content fondosimple">
+                        <div class="modal-header">                        
+                            <h4 class="modal-title" id="pregunta"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <respostesPossibles>
+                            </respostesPossibles>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="botoEnviar" type="submit" class="btn btn-primary">Enviar</button>                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="respostesFinalUsuari" class="row">
+                <div class="alert alert-dismissible alert-info">
+                    <respostesFinalMostrades>
+                    </respostesFinalMostrades>
+                </div>
+            </div>
+        </div>
+        
+        <!--Scripts-->
+        <script>
+            //Varariable per tindre control sobre el vídeo
+            var miVideo = document.getElementById("video");
+            var interval; //control del interval
+            
+            /**
+             * Class Personaje
+             * nombre: Nombre del personaje
+             * vaAComprar: Si su decision a sido ir a comprar
+             */
+            function Personaje(nombre){
+                this.nombre = nombre;
+                this.vaAComprar = false; //Boolean
+            }
+            
+            /**
+            * Class Escena
+            * segon: Segon on acaba l'escena
+            * pregunta: Pregunta o descripció que es mostrará a l'usuari per escollir una resposta
+            * respostes: Respostes possibles que podrá escollir l'usuari
+            * segonResposta: Cada resposta té un link a un altre segon
+            * saltarParada: Salta el pause video y se decide por el valor de decisionDeOtraEscena
+            * afecaPersonaje: Si la escena afecta a un personaje (solo pondrá a true que va a comprar el personaje)
+            * nombrePersonajeAfectado: Nombre personaje afectado
+            * reproducida: Si la escena ya ha sido reproducida
+            */
+            function Escena(segon,pregunta,respostes,segonResposta,saltarParada,afectaPersonaje,nombrePersonajeAfectado){
+                //this = public | var = private
+                this.segon = segon; //Integer
+                this.pregunta = pregunta; //String
+                this.respostes = respostes; //Array String
+                this.segonResposta = segonResposta; //Array Integer
+                this.saltarParada = saltarParada; //Boolean
+                this.afectaPersonaje = afectaPersonaje; //Boolean
+                this.nombrePersonajeAfectado = nombrePersonajeAfectado; //String
+                this.reproducida = false;
+            }
+            
+            //CREACIÓ DE PERSONATGES:
+            var hija = new Personaje("hija");
+            var padre = new Personaje("padre");
+            
+            var personajes = [hija,padre];
+            
+            //CREACIÓ D'ESCENES(ficar en ordre en l'array escenas):
+            //NO ES POT REPETIR EL TEXT D'UNA RESPOSTA EN UNA ESCENA (Es compara per buscar la resposta marcada per l'usuari)
+            var escena1   = new Escena(12,"¿Ir a clase o ir de compras?",["Me lo pienso caminando..."],[13.2501],false,false,"");
+            var escena1_1 = new Escena(15,"Deja de pensar y decide", ["¡Ir de compras!","Ir a clase..."],[16,16],false,true,"hija"); //va a primera escena padre y guarda decision
+            var escena2   = new Escena(24,"¿Hora de ser productivo?",["Me lo pienso caminando... (Viene de familia)"],[26],false,false,"");
+            var escena2_2 = new Escena(30,"Deja de pensar y decide",["Dejémoslo para otro día, vayamos a comprar","¡Dejémonos de tonterías y a currar!"],[31,31],false,true,"padre"); //guarda decision
+            var escena3   = new Escena(32,"Decision!",["Hija ha ido comprar","Hija ha ido a clase"],[62,32],true,false,"hija");
+            var escena4   = new Escena(53,"Decision!",["Padre ha ido a comprar","Padre ha ido a trabajar"],[133,54],true,false,"padre");
+            var escena5   = new Escena(61,"Decision!",["Hija ha ido a comprar","Fin"],[107,151],true,false,"hija");
+            var escena6   = new Escena(68,"Decision!",["Padre ha ido a comprar","Pade ha ido a trabajar"],[69,54],true,false,"padre");
+            var escena7  = new Escena(106,"Fin hija pillada",["Fin","End"],[151,151],true,false,"hija");
+            var escena8  = new Escena(132,"Fin hija ganando",["Fin","End"],[151,151],true,false,"hija");
+            
+            var escenas = [escena1,escena1_1,escena2,escena2_2,escena3,escena4,escena5,escena6,escena7,escena8]; //Agrupar escenes
+            var respostesUsuari = []; //Array de Strings amb les respostes escollides per l'usuari.
+            var escenaActual = new Escena(); //Escena actual
+            
+            /**Funció per reiniciar respostes de l'usuari**/
+            function reiniciarRespostes(){
+                respostesUsuari = [];
+            }
+            
+            /**Cada segon comprova si está en el minut que volem per fer saltar la pregunta**/
+            function iniciarInterval(){
+                interval = setInterval(function(){
+                    console.log("Activo: CurrentTime: " + miVideo.currentTime + " Duration: " + miVideo.duration);
+                    mostrarPregunta(escenas);
+                    intentarReiniciar();
+                }, 1000); //Interval de 1 segon
+            }
+            
+            /**Parar l'interval**/
+            function pararInterval() {
+                console.log("Interval parado");
+                clearInterval(interval);
+            }
+            
+            /**Funció que fa mostrar el modal**/
+            function mostrarPregunta(escenas){
+                //obtenim el segon actual sense milisegons
+                var segonActual = Math.floor(miVideo.currentTime);
+                //comprovació del segon en cada escena per saber quina escena es la que ha de saltar.
+                for (i=0; i < escenas.length; i++){
+                    console.log("EscenaSegon: " + escenas[i].segon + " sActual: " +segonActual + " SaltarParada? " + escenas[i].saltarParada);
+                    if((escenas[i].segon == segonActual)&&(!escenas[i].reproducida)){
+                        escenaActual = escenas[i];
+                        escenaActual.reproducida = true;
+                        if(escenaActual.saltarParada){
+                            var decision = 1;
+                            for(j=0; j < personajes.length; j++){
+                                if(escenaActual.nombrePersonajeAfectado == personajes[j].nombre){
+                                    if(personajes[j].vaAComprar){
+                                        decision = 0;
+                                    }
+                                }
+                            }
+                            miVideo.currentTime = escenaActual.segonResposta[decision];
+                        }
+                        else{
+                            miVideo.pause();
+                            $('#miModal').modal('show');
+                            $('#pregunta').text(escenaActual.pregunta);
+                            muntarRespostesPossiblesUsuari(escenaActual.respostes);
+                            pararInterval();
+                        }
+                    }
+                }
+            }
+            
+            /**Funció per muntar les respostes possibles per l'usuari dinámicament**/
+            function muntarRespostesPossiblesUsuari(llistaRespostesPossibles){
+                $("respostesPossibles").html("");
+                for (i=0; i < llistaRespostesPossibles.length; i++){
+                     var cadena = '<div class="radio">';
+                     cadena     += '<label><input type="radio" name="grupo1" value="opcion' +  i + '">';
+                     cadena     += "<label id=opcion" + i + ">" + llistaRespostesPossibles[i] + "</label>";
+                     cadena     += "</label></div>";
+                     $("respostesPossibles").prepend(cadena);
+                 }
+            }
+            
+            /**Funció per reiniciar si s'han respos totes les preguntes i s'ha acabat de veure el vídeo**/
+            function intentarReiniciar(){
+                var duracioTotal = Math.floor(miVideo.duration);
+                var segonActual = Math.floor(miVideo.currentTime);
+                if (segonActual == duracioTotal){
+                    pararInterval();
+                    muntarResumUsuari(respostesUsuari);
+                    $('#respostesFinalUsuari').show();
+                    reiniciarRespostes();
+                    console.log("intentarReiniciar Successful");
+                }
+            }
+            
+            /**Funció per muntar les respostes seleccionades per l'usuari (en ordre de primer a últim) dinámicament**/
+            function muntarResumUsuari(llistaRespostesUsuari){
+                $("respostesFinalMostrades").html("");
+                $("respostesFinalMostrades").append("<span>HISTORIAL:</span>");
+                for (i=0; i < llistaRespostesUsuari.length; i++){
+                    var cadena = "<br><span>";
+                    cadena += "Decisión " + (i+1) + " :<b>" + llistaRespostesUsuari[i] + "</b>";
+                    cadena += "</span>";
+                    $("respostesFinalMostrades").append(cadena);
+                 }
+            }
+            
+            /**Quan el document estigui carregat s'executa el video, comença l'interval de temps i s'activa el listener del botó**/
+            $(document).ready(function() {
+                //Executem el video de forma automática al carregar la web
+                miVideo.play();
+                $('#respostesFinalUsuari').hide();
+                iniciarInterval();
+                
+                /**Listener sobre el botó de enviar resposta**/
+//TODO. Comprobar que se ha seleccionado un radioButton
+                $('#botoEnviar').click(function(){
+                    //Guarda en RespostesRadio els controls (per id) que son input type radio
+                    var respostesRadio = $('input[type=radio]');
+                    //Busca en respostesRadio la respostaMarcada 
+                    var respostaMarcada = respostesRadio.filter(':checked').val();
+                    //Afegeix al array de respostesUsuari el text de la resposta seleccionada
+                    var textRespostaMarcada = $( "label[id='"+respostaMarcada+"']" ).text();
+                    respostesUsuari.push(textRespostaMarcada);
+                    $("respostesPossibles").html("");
+                    $('#miModal').modal('hide');
+                    //For per comparar la resposta marcada amb la resposta de la escena
+                    for (j=0; j < escenaActual.respostes.length; j++){
+                        if(escenaActual.respostes[j] == textRespostaMarcada){
+                            console.log("Resposta marcada: " + escenaActual.respostes[j] + " Porta al segon: " + escenaActual.segonResposta[j]);
+                            miVideo.currentTime = escenaActual.segonResposta[j];
+                            if((escenaActual.afectaPersonaje) && (j == 0)){
+                                for(i=0; i < personajes.length; i++){
+                                    if(escenaActual.nombrePersonajeAfectado == personajes[i].nombre){
+                                        personajes[i].vaAComprar = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    miVideo.play();
+                    iniciarInterval();
+                });
+            });
+        </script>
+    </body>
+</html>
